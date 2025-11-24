@@ -1,4 +1,4 @@
-# Hospital CRM - Lupin Stockist 360 Dashboard
+# Hospital CRM - Stockist 360 Dashboard
 
 > A premium CRM dashboard for hospital and pharmacy distributor management
 
