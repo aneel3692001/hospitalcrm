@@ -1,12 +1,19 @@
-# Lupin CRM - Stockist 360 Dashboard
+# Hospital CRM - Lupin Stockist 360 Dashboard
+
+> A premium CRM dashboard for hospital and pharmacy distributor management
+
+## 📋 Overview
+
+This is a comprehensive Hospital CRM UI built with clean code practices and modern web standards. The dashboard provides real-time insights into sales, inventory, and financial metrics for pharmaceutical distributors.
 
 ## 📁 File Structure
 
 ```
-Lupin CRM/
+Hospital CRM/
 ├── index.html      # Clean HTML structure (semantic markup)
 ├── styles.css      # All styles with design tokens
 ├── script.js       # Interactive functionality
+├── tokens.js       # Design token definitions
 └── README.md       # This file
 ```
 
@@ -18,7 +25,7 @@ The dashboard uses a comprehensive design token system referenced from `tokens.j
 - **Colors**: Base, brand, semantic (success/error/warning), grays, extended palette
 - **Spacing**: Consistent spacing scale (4px to 48px+)
 - **Border Radius**: From sharp to fully rounded
-- **Typography**: Font families, sizes,weights, line heights
+- **Typography**: Font families, sizes, weights, line heights
 - **Effects**: Shadows, transitions, focus rings
 
 ## 🚀 Usage
@@ -94,7 +101,7 @@ Brand colors follow a scale from 25 (lightest) to 950 (darkest):
 
 To customize the dashboard:
 
-1. **Update Colors**: Modify CSS custom properties in `styles.css`:root`
+1. **Update Colors**: Modify CSS custom properties in `styles.css` `:root`
 2. **Change Layout**: Adjust grid templates in respective component classes
 3. **Add Functionality**: Extend `script.js` with new event handlers
 4. **Modify Data**: Update HTML content in `index.html`
