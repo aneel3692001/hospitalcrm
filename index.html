@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Lupin • Stockist 360 – Premium Dashboard</title>
+    <title>Stockist 360</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,6 +13,9 @@
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="styles.css">
+
+    <!-- Chart.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </head>
 
 <body>
@@ -97,7 +100,19 @@
                     <div id="tab-btn-credit" class="main-tab" onclick="switchTab('credit')">Credit, Finance & Compliance
                     </div>
                 </div>
-                <div class="tabs-context">Snapshot: <span>Last 3 Months</span></div>
+                <div class="tabs-context">
+                    <label for="time-period-select">Snapshot:</label>
+                    <select id="time-period-select" class="period-dropdown">
+                        <option value="this-week">This Week</option>
+                        <option value="last-week">Last Week</option>
+                        <option value="this-month">This Month</option>
+                        <option value="last-month">Last Month</option>
+                        <option value="last-3-months" selected>Last 3 Months</option>
+                        <option value="last-6-months">Last 6 Months</option>
+                        <option value="last-year">Last Year</option>
+                        <option value="all">All Time</option>
+                    </select>
+                </div>
             </div>
 
             <!-- SALES TAB -->
@@ -160,64 +175,8 @@
                                     <div class="time-pill">3 Months</div>
                                 </div>
                             </div>
-                            <div class="chart-wrapper">
-                                <div class="y-axis">
-                                    <span>4.0</span><span>3.0</span><span>2.0</span><span>1.0</span><span>0</span>
-                                </div>
-                                <div class="chart-area">
-                                    <div class="hover-layer">
-                                        <div class="hover-col">
-                                            <div class="chart-tooltip">May: ₹1.80 L</div>
-                                            <div class="data-dot" style="bottom: 45%;"></div>
-                                        </div>
-                                        <div class="hover-col">
-                                            <div class="chart-tooltip">Jun: ₹2.20 L</div>
-                                            <div class="data-dot" style="bottom: 55%;"></div>
-                                        </div>
-                                        <div class="hover-col">
-                                            <div class="chart-tooltip">Jul: ₹2.10 L</div>
-                                            <div class="data-dot" style="bottom: 52.5%;"></div>
-                                        </div>
-                                        <div class="hover-col">
-                                            <div class="chart-tooltip">Aug: ₹2.60 L</div>
-                                            <div class="data-dot" style="bottom: 65%;"></div>
-                                        </div>
-                                        <div class="hover-col">
-                                            <div class="chart-tooltip">Sep: ₹2.80 L</div>
-                                            <div class="data-dot" style="bottom: 70%;"></div>
-                                        </div>
-                                        <div class="hover-col">
-                                            <div class="chart-tooltip">Oct: ₹3.00 L</div>
-                                            <div class="data-dot" style="bottom: 75%;"></div>
-                                        </div>
-                                    </div>
-                                    <svg class="sales-svg" preserveAspectRatio="none" viewBox="0 0 300 130">
-                                        <defs>
-                                            <linearGradient id="gradientBlue" x1="0" y1="0" x2="0" y2="1">
-                                                <stop offset="0%" stop-color="#066afe" stop-opacity="0.3" />
-                                                <stop offset="100%" stop-color="#066afe" stop-opacity="0" />
-                                            </linearGradient>
-                                        </defs>
-                                        <line x1="0" y1="32.5" x2="300" y2="32.5" class="grid-line" />
-                                        <line x1="0" y1="65" x2="300" y2="65" class="grid-line" />
-                                        <line x1="0" y1="97.5" x2="300" y2="97.5" class="grid-line" />
-                                        <line x1="0" y1="130" x2="300" y2="130" class="grid-line" />
-                                        <polygon
-                                            points="25,130 25,71.5 75,58.5 125,61.75 175,45.5 225,39 275,32.5 275,130"
-                                            class="path-area" />
-                                        <polyline points="25,71.5 75,58.5 125,61.75 175,45.5 225,39 275,32.5"
-                                            class="path-line" vector-effect="non-scaling-stroke" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <div class="x-axis">
-                                <span class="x-label">May</span>
-                                <span class="x-label">Jun</span>
-                                <span class="x-label">Jul</span>
-                                <span class="x-label">Aug</span>
-                                <span class="x-label">Sep</span>
-                                <span class="x-label">Oct</span>
-                            </div>
+                            <!-- Chart.js Canvas -->
+                            <canvas id="sales-trend-chart" class="google-chart"></canvas>
                         </div>
                     </div>
                     <div class="glass-card">
@@ -275,28 +234,8 @@
                                 </div>
                                 <div class="badge-chip bc-purple">+4%</div>
                             </div>
-                            <div class="chart-box">
-                                <div class="chart-bar-col" data-val="3200 Units">
-                                    <div class="chart-bar secondary" style="height: 30%;"></div>
-                                    <div class="chart-label">AB-FLO</div>
-                                </div>
-                                <div class="chart-bar-col" data-val="7500 Units">
-                                    <div class="chart-bar secondary" style="height: 80%;"></div>
-                                    <div class="chart-label">Lupicet</div>
-                                </div>
-                                <div class="chart-bar-col" data-val="4200 Units">
-                                    <div class="chart-bar secondary" style="height: 45%;"></div>
-                                    <div class="chart-label">Aciloc</div>
-                                </div>
-                                <div class="chart-bar-col" data-val="5800 Units">
-                                    <div class="chart-bar secondary" style="height: 60%;"></div>
-                                    <div class="chart-label">Gluconorm</div>
-                                </div>
-                                <div class="chart-bar-col" data-val="2100 Units">
-                                    <div class="chart-bar secondary" style="height: 25%;"></div>
-                                    <div class="chart-label">Others</div>
-                                </div>
-                            </div>
+                            <!-- Chart.js Canvas -->
+                            <canvas id="billing-volume-chart" class="google-chart google-chart-small"></canvas>
                             <div class="card-note">
                                 <span class="note-warn">Insight:</span> Lupicet driving secondary volume (Seasonal).
                             </div>
@@ -404,24 +343,8 @@
                                 </div>
                                 <div class="badge-chip bc-green">High</div>
                             </div>
-                            <div class="chart-box">
-                                <div class="chart-bar-col" data-val="180/day">
-                                    <div class="chart-bar primary" style="height: 40%;"></div>
-                                    <div class="chart-label">WK1</div>
-                                </div>
-                                <div class="chart-bar-col" data-val="220/day">
-                                    <div class="chart-bar primary" style="height: 55%;"></div>
-                                    <div class="chart-label">WK2</div>
-                                </div>
-                                <div class="chart-bar-col" data-val="195/day">
-                                    <div class="chart-bar primary" style="height: 45%;"></div>
-                                    <div class="chart-label">WK3</div>
-                                </div>
-                                <div class="chart-bar-col" data-val="265/day">
-                                    <div class="chart-bar primary" style="height: 70%;"></div>
-                                    <div class="chart-label">WK4</div>
-                                </div>
-                            </div>
+                            <!-- Chart.js Canvas -->
+                            <canvas id="sales-velocity-chart" class="google-chart google-chart-small"></canvas>
                             <div class="metric-row">
                                 <span class="metric-label">Avg Velocity</span>
                                 <span class="metric-val">240 Units/day</span>

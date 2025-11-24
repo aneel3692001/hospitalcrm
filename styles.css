@@ -566,6 +566,70 @@ body {
 }
 
 /* ========================================
+   TIME PERIOD DROPDOWN
+   ======================================== */
+.tabs-context label {
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+}
+
+.period-dropdown {
+    margin-left: var(--space-2);
+    padding: 6px 32px 6px 12px;
+    font-family: var(--font-family);
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    color: var(--text-main);
+    background: var(--color-white);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition);
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23667085' d='M6 8L2 4h8z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    box-shadow: var(--shadow-card);
+}
+
+.period-dropdown:hover {
+    border-color: var(--brand-500);
+    box-shadow: 0 0 0 3px var(--brand-100);
+}
+
+.period-dropdown:focus {
+    outline: none;
+    border-color: var(--brand-500);
+    box-shadow: 0 0 0 3px var(--brand-100);
+}
+
+/* ========================================
+   GOOGLE CHARTS CONTAINERS
+   ======================================== */
+.google-chart {
+    width: 100% !important;
+    height: 280px !important;
+    max-height: 280px !important;
+    margin: var(--space-3) 0;
+    border-radius: var(--radius-md);
+    display: block;
+}
+
+.google-chart-small {
+    height: 200px !important;
+    max-height: 200px !important;
+}
+
+.card-inner .google-chart {
+    margin-top: var(--space-2);
+}
+
+/* Ensure canvas elements don't overflow */
+canvas {
+    max-width: 100%;
+}
+
+/* ========================================
    KPI STRIP
    ======================================== */
 .kpi-strip {
