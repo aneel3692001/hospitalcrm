@@ -1263,32 +1263,403 @@ tfoot td {
 }
 
 /* ========================================
-   RESPONSIVE DESIGN
+   MOBILE NAVIGATION
+   ======================================== */
+.mobile-menu-btn {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1001;
+    background: linear-gradient(135deg, var(--brand-500), var(--brand-600));
+    border: none;
+    border-radius: var(--radius-md);
+    padding: 12px;
+    cursor: pointer;
+    box-shadow: var(--shadow-card);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mobile-menu-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(6, 106, 254, 0.3);
+}
+
+.mobile-menu-btn:active {
+    transform: scale(0.95);
+}
+
+.mobile-menu-btn span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: white;
+    margin: 5px 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 2px;
+}
+
+.mobile-menu-btn.active span:nth-child(1) {
+    transform: rotate(45deg) translate(7px, 7px);
+}
+
+.mobile-menu-btn.active span:nth-child(2) {
+    opacity: 0;
+    transform: translateX(-10px);
+}
+
+.mobile-menu-btn.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* Sidebar Overlay */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar-overlay.active {
+    opacity: 1;
+}
+
+/* ========================================
+   RESPONSIVE: TABLET (768px - 1200px)
    ======================================== */
 @media (max-width: 1200px) {
     .kpi-strip {
         grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-3);
     }
 
     .grid-row {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    /* Slightly smaller charts on tablet */
+    .google-chart {
+        height: 240px !important;
+        max-height: 240px !important;
+    }
+
+    .google-chart-small {
+        height: 180px !important;
+        max-height: 180px !important;
+    }
+
+    /* Adjust font sizes for tablet */
+    .page-title {
+        font-size: 28px;
+    }
+
+    .kpi-value {
+        font-size: 24px;
+    }
 }
 
-@media (max-width: 900px) {
+/* ========================================
+   RESPONSIVE: MOBILE (< 768px)
+   ======================================== */
+@media (max-width: 768px) {
+
+    /* Show mobile menu button */
+    .mobile-menu-btn {
+        display: block;
+    }
+
+    /* Mobile app layout */
     .app {
         grid-template-columns: 1fr;
     }
 
+    /* Sidebar as slide-in overlay */
     .sidebar {
-        display: none;
+        position: fixed;
+        top: 0;
+        left: -100%;
+        height: 100vh;
+        z-index: 1000;
+        transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 2px 0 20px rgba(0, 0, 0, 0.15);
+        width: 280px;
     }
 
-    .stockist-card {
-        grid-template-columns: 1fr;
+    .sidebar.active {
+        left: 0;
     }
 
+    /* Main content adjustments */
+    .main {
+        padding: var(--space-4);
+        padding-top: 80px;
+    }
+
+    /* Top nav responsive */
+    .top-nav {
+        flex-direction: column;
+        gap: var(--space-3);
+        padding: var(--space-4);
+    }
+
+    .search-wrapper {
+        width: 100%;
+    }
+
+    .user-controls {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    /* Header responsive */
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-3);
+    }
+
+    .page-title {
+        font-size: 24px;
+    }
+
+    /* 2-column KPIs on mobile */
+    .kpi-strip {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-2);
+    }
+
+    .kpi-card {
+        padding: var(--space-3);
+    }
+
+    .kpi-label {
+        font-size: 11px;
+    }
+
+    .kpi-value {
+        font-size: 22px;
+    }
+
+    /* Stack grid items */
     .grid-row {
         grid-template-columns: 1fr;
+        gap: var(--space-3);
+    }
+
+    /* Tabs responsive */
+    .tabs-row {
+        flex-direction: column;
+        gap: var(--space-3);
+        align-items: stretch;
+    }
+
+    .tabs {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .main-tab {
+        width: 100%;
+        min-height: 48px;
+        padding: 12px 16px;
+        justify-content: flex-start;
+        font-size: 14px;
+    }
+
+    .tabs-context {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .period-dropdown {
+        width: 100%;
+        margin: 0;
+        padding: 10px 32px 10px 12px;
+    }
+
+    /* Smaller charts on mobile */
+    .google-chart {
+        height: 200px !important;
+        max-height: 200px !important;
+    }
+
+    .google-chart-small {
+        height: 160px !important;
+        max-height: 160px !important;
+    }
+
+    /* Tables scroll horizontally */
+    .table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        border-radius: var(--radius-md);
+    }
+
+    table {
+        min-width: 600px;
+    }
+
+    /* Touch-friendly time pills */
+    .time-pills {
+        flex-wrap: wrap;
+        gap: var(--space-2);
+    }
+
+    .time-pill {
+        padding: 10px 16px;
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        font-size: 13px;
+    }
+
+    /* Card spacing */
+    .card-inner {
+        padding: var(--space-4);
+    }
+
+    .card-title {
+        font-size: 16px;
+    }
+
+    .card-sub {
+        font-size: 12px;
+    }
+
+    /* Glass cards maintain premium look */
+    .glass-card {
+        backdrop-filter: blur(10px);
+    }
+
+    /* Section labels */
+    .section-label {
+        font-size: 12px;
+        padding: var(--space-2) var(--space-3);
+    }
+
+    /* Badges and chips */
+    .badge-chip {
+        padding: 6px 12px;
+        font-size: 11px;
+    }
+
+    /* Metrics */
+    .metric-label {
+        font-size: 12px;
+    }
+
+    .metric-val {
+        font-size: 13px;
+    }
+}
+
+/* ========================================
+   RESPONSIVE: SMALL MOBILE (< 480px)
+   ======================================== */
+@media (max-width: 480px) {
+
+    /* Single column KPIs */
+    .kpi-strip {
+        grid-template-columns: 1fr;
+    }
+
+    /* Smaller text */
+    .page-title {
+        font-size: 22px;
+    }
+
+    .kpi-label {
+        font-size: 10px;
+    }
+
+    .kpi-value {
+        font-size: 20px;
+    }
+
+    /* Compact main content */
+    .main {
+        padding: var(--space-3);
+        padding-top: 75px;
+    }
+
+    /* Top nav compact */
+    .top-nav {
+        padding: var(--space-3);
+    }
+
+    /* Smaller charts */
+    .google-chart {
+        height: 180px !important;
+        max-height: 180px !important;
+    }
+
+    .google-chart-small {
+        height: 140px !important;
+        max-height: 140px !important;
+    }
+
+    /* Compact tabs */
+    .main-tab {
+        font-size: 13px;
+        padding: 10px 14px;
+        min-height: 44px;
+    }
+
+    /* Sidebar narrower */
+    .sidebar {
+        width: 260px;
+    }
+
+    /* Card padding */
+    .card-inner {
+        padding: var(--space-3);
+    }
+
+    /* Compact period dropdown */
+    .period-dropdown {
+        font-size: 12px;
+        padding: 8px 28px 8px 10px;
+    }
+}
+
+/* ========================================
+   TOUCH OPTIMIZATION
+   ======================================== */
+@media (hover: none) and (pointer: coarse) {
+
+    /* Remove hover effects on touch devices */
+    .kpi-card:hover {
+        transform: none;
+    }
+
+    /* Add active state for touch feedback */
+    .kpi-card:active,
+    .glass-card:active {
+        transform: scale(0.98);
+        transition: transform 0.1s ease;
+    }
+
+    .time-pill:active {
+        transform: scale(0.95);
+    }
+
+    .main-tab:active {
+        transform: scale(0.98);
+    }
+
+    /* Ensure all tap targets are at least 44x44px */
+    button,
+    .time-pill,
+    .main-tab,
+    .badge-chip {
+        min-height: 44px;
+        min-width: 44px;
     }
 }

@@ -654,12 +654,61 @@ function initializeTimePeriodDropdown() {
 }
 
 /**
+ * Initialize mobile navigation
+ */
+function initializeMobileNav() {
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+
+    if (!menuBtn || !sidebar || !overlay) return;
+
+    // Toggle menu
+    menuBtn.addEventListener('click', () => {
+        const isActive = sidebar.classList.contains('active');
+
+        menuBtn.classList.toggle('active');
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+        overlay.style.display = isActive ? 'none' : 'block';
+
+        // Prevent body scroll when menu is open
+        document.body.style.overflow = isActive ? '' : 'hidden';
+    });
+
+    // Close on overlay click
+    overlay.addEventListener('click', () => {
+        menuBtn.classList.remove('active');
+        sidebar.classList.remove('active');
+        overlay.classList.remove('active');
+        overlay.style.display = 'none';
+        document.body.style.overflow = '';
+    });
+
+    // Close on navigation link click (mobile only)
+    if (window.innerWidth < 768) {
+        document.querySelectorAll('.sidebar a, .sidebar .nav-item').forEach(link => {
+            link.addEventListener('click', () => {
+                menuBtn.classList.remove('active');
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+                overlay.style.display = 'none';
+                document.body.style.overflow = '';
+            });
+        });
+    }
+
+    console.log('✓ Mobile navigation initialized');
+}
+
+/**
  * Initialize the dashboard when DOM is ready
  */
 function initializeDashboard() {
     initializeTimePills();
     initializeTimePeriodDropdown();
-    initializeChartJS(); // Initialize Chart.js
+    initializeChartJS();
+    initializeMobileNav(); // Initialize mobile navigation
 
     // Set default tab (sales)
     if (tabs.sales) {
