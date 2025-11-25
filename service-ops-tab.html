@@ -1,0 +1,424 @@
+<!-- SERVICE & OPERATIONS TAB -->
+<div id="tab-service" class="hidden fade-in">
+
+    <!-- KPI Strip -->
+    <section class="kpi-strip">
+        <div class="kpi-card">
+            <div class="kpi-icon">🏭</div>
+            <div class="kpi-label">Infra readiness score</div>
+            <div class="kpi-value">82 <span style="color: var(--text-muted);">/ 100</span></div>
+            <div class="kpi-meta">Cold chain & warehouse utilization</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-icon">🚚</div>
+            <div class="kpi-label">Avg delivery TAT</div>
+            <div class="kpi-value good">6.4 hrs</div>
+            <div class="kpi-meta">Last 30 days • metro hospital</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-icon">🧾</div>
+            <div class="kpi-label">Complaint resolution TAT</div>
+            <div class="kpi-value warn">1.8 days</div>
+            <div class="kpi-meta">From logging to closure</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-icon">✅</div>
+            <div class="kpi-label">SLA adherence</div>
+            <div class="kpi-value good">93%</div>
+            <div class="kpi-meta">Orders & complaints within SLA</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-icon">💬</div>
+            <div class="kpi-label">Support responsiveness</div>
+            <div class="kpi-value good">4.6 <span style="color: var(--text-muted);">/ 5</span></div>
+            <div class="kpi-meta">KAM feedback score</div>
+        </div>
+    </section>
+
+    <!-- Row 1: Operational Infrastructure -->
+    <div class="section-label">Operational Infrastructure</div>
+    <section class="grid-row">
+        <!-- Field Delivery Capacity -->
+        <div class="glass-card">
+            <div class="card-inner">
+                <div class="card-header-row">
+                    <div>
+                        <div class="card-title">Field Delivery Capacity</div>
+                        <div class="card-sub">Active field resources</div>
+                    </div>
+                    <div class="badge-chip bc-green">Active</div>
+                </div>
+                <div style="margin-top: 16px;">
+                    <div class="metric-row">
+                        <span class="metric-label">Delivery boys</span>
+                        <span class="metric-val">8 active</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Vehicles</span>
+                        <span class="metric-val">5 (3 two-wheelers, 2 vans)</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Avg drops per day</span>
+                        <span class="metric-val">24</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Max capacity</span>
+                        <span class="metric-val">40</span>
+                    </div>
+                </div>
+                <div class="card-note">
+                    Based on last 30 days of delivery logs
+                </div>
+            </div>
+        </div>
+
+        <!-- Cold Chain Capacity -->
+        <div class="glass-card">
+            <div class="card-inner">
+                <div class="card-header-row">
+                    <div>
+                        <div class="card-title">Cold Chain Capacity</div>
+                        <div class="card-sub">Temperature-controlled storage</div>
+                    </div>
+                    <div class="badge-chip bc-green">Normal</div>
+                </div>
+                <div style="margin-top: 16px;">
+                    <div class="metric-row">
+                        <span class="metric-label">Storage capacity</span>
+                        <span class="metric-val">320 L</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Utilization</span>
+                        <span class="metric-val">68%</span>
+                    </div>
+                    <div
+                        style="height:6px; width:100%; background:var(--gray-100); border-radius:99px; margin-bottom:12px;">
+                        <div style="width:68%; background:var(--success-500); height:100%; border-radius:99px;"></div>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Backup power</span>
+                        <span class="metric-val good">✓ Available</span>
+                    </div>
+                    <div style="margin-top: 12px;">
+                        <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px;">Line coverage:</div>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                            <span class="badge-chip bc-green">Vaccines</span>
+                            <span class="badge-chip bc-green">Insulins</span>
+                            <span class="badge-chip bc-green">Biologics</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Warehouse Capacity Utilization -->
+        <div class="glass-card">
+            <div class="card-inner">
+                <div class="card-header-row">
+                    <div>
+                        <div class="card-title">Warehouse Capacity Utilization</div>
+                        <div class="card-sub">Storage & throughput metrics</div>
+                    </div>
+                    <div class="badge-chip bc-purple">74% Used</div>
+                </div>
+                <div style="margin-top: 16px;">
+                    <div class="metric-row">
+                        <span class="metric-label">Total capacity</span>
+                        <span class="metric-val">5,000 sq. ft</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Current utilization</span>
+                        <span class="metric-val">74%</span>
+                    </div>
+                    <div
+                        style="height:6px; width:100%; background:var(--gray-100); border-radius:99px; margin-bottom:12px;">
+                        <div style="width:74%; background:var(--brand-500); height:100%; border-radius:99px;"></div>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Peak monthly throughput</span>
+                        <span class="metric-val">₹1.2 Cr</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">FIFO/FEFO adherence</span>
+                        <span class="metric-val good">96%</span>
+                    </div>
+                </div>
+                <div class="card-note">
+                    Utilization > 85% triggers capacity pressure risk
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Row 2: Service Performance Metrics -->
+    <div class="section-label">Service Performance Metrics</div>
+    <section class="grid-row">
+        <!-- Delivery TAT -->
+        <div class="glass-card">
+            <div class="card-inner">
+                <div class="card-header-row">
+                    <div>
+                        <div class="card-title">Delivery Turnaround Time (TAT)</div>
+                        <div class="card-sub">By order type</div>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Order Type</th>
+                                <th class="text-right">TAT</th>
+                                <th class="text-right">SLA</th>
+                                <th class="text-right">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Scheduled orders</td>
+                                <td class="text-right">7.2 hrs</td>
+                                <td class="text-right">8 hrs</td>
+                                <td class="text-right"><span class="trend good">✓ Within SLA</span></td>
+                            </tr>
+                            <tr>
+                                <td>Emergency orders</td>
+                                <td class="text-right">3.5 hrs</td>
+                                <td class="text-right">4 hrs</td>
+                                <td class="text-right"><span class="trend good">✓ Within SLA</span></td>
+                            </tr>
+                            <tr>
+                                <td>Weekend orders</td>
+                                <td class="text-right">9.1 hrs</td>
+                                <td class="text-right">10 hrs</td>
+                                <td class="text-right"><span class="trend good">✓ Within SLA</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Complaint Resolution TAT -->
+        <div class="glass-card">
+            <div class="card-inner">
+                <div class="card-header-row">
+                    <div>
+                        <div class="card-title">Complaint Resolution TAT</div>
+                        <div class="card-sub">Last 3 months breakdown</div>
+                    </div>
+                    <div class="badge-chip bc-purple">88% SLA</div>
+                </div>
+                <div style="margin-top: 16px;">
+                    <div class="metric-row">
+                        <span class="metric-label">Average TAT</span>
+                        <span class="metric-val">1.8 days</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Closed within SLA</span>
+                        <span class="metric-val good">88%</span>
+                    </div>
+                </div>
+                <div class="table-container" style="margin-top: 16px;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Complaint Type</th>
+                                <th class="text-right">TAT</th>
+                                <th class="text-right">SLA</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Billing issues</td>
+                                <td class="text-right">1. 2d</td>
+                                <td class="text-right"><span class="trend good">✓</span></td>
+                            </tr>
+                            <tr>
+                                <td>Short supply/breakage</td>
+                                <td class="text-right">2.1d</td>
+                                <td class="text-right"><span class="trend warn">⚠</span></td>
+                            </tr>
+                            <tr>
+                                <td>Expiry/replacement</td>
+                                <td class="text-right">2.3d</td>
+                                <td class="text-right"><span class="trend bad">✗</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Support Responsiveness -->
+        <div class="glass-card">
+            <div class="card-inner">
+                <div class="card-header-row">
+                    <div>
+                        <div class="card-title">Support Responsiveness (KAM Logs)</div>
+                        <div class="card-sub">Response & satisfaction metrics</div>
+                    </div>
+                    <div class="badge-chip bc-green">Excellent</div>
+                </div>
+                <div style="margin-top: 16px;">
+                    <div class="metric-row">
+                        <span class="metric-label">First response time</span>
+                        <span class="metric-val good">45 mins</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Satisfaction score</span>
+                        <span class="metric-val good">4.6 / 5 ⭐</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Open tickets > 3 days</span>
+                        <span class="metric-val warn">3</span>
+                    </div>
+                </div>
+                <div style="margin-top: 16px;">
+                    <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px;">Support channels:</div>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <span class="badge-chip bc-blue">Phone</span>
+                        <span class="badge-chip bc-green">WhatsApp</span>
+                        <span class="badge-chip bc-purple">Email</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Row 3: Service Summary -->
+    <div class="section-label">Service Summary</div>
+    <section class="grid-row">
+        <!-- SLA Overview -->
+        <div class="glass-card">
+            <div class="card-inner">
+                <div class="card-header-row">
+                    <div>
+                        <div class="card-title">SLA Overview</div>
+                        <div class="card-sub">Overall adherence metrics</div>
+                    </div>
+                    <div class="badge-chip bc-green">93%</div>
+                </div>
+                <div style="margin-top: 16px;">
+                    <div class="metric-row">
+                        <span class="metric-label">Overall SLA adherence</span>
+                        <span class="metric-val good">93%</span>
+                    </div>
+                    <div
+                        style="height:6px; width:100%; background:var(--gray-100); border-radius:99px; margin-bottom:16px;">
+                        <div style="width:93%; background:var(--success-500); height:100%; border-radius:99px;"></div>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th class="text-right">Adherence</th>
+                                <th class="text-right">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Order SLA adherence</td>
+                                <td class="text-right">95%</td>
+                                <td class="text-right"><span class="trend good">✓ Good</span></td>
+                            </tr>
+                            <tr>
+                                <td>Complaint SLA adherence</td>
+                                <td class="text-right">88%</td>
+                                <td class="text-right"><span class="trend warn">⚠ Watch</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- DCR Coverage -->
+        <div class="glass-card">
+            <div class="card-inner">
+                <div class="card-header-row">
+                    <div>
+                        <div class="card-title">DCR Coverage</div>
+                        <div class="card-sub">Daily call reporting integration</div>
+                    </div>
+                    <div class="badge-chip bc-purple">86%</div>
+                </div>
+                <div style="margin-top: 16px;">
+                    <div class="metric-row">
+                        <span class="metric-label">Coverage vs plan</span>
+                        <span class="metric-val">86%</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Avg visits per week</span>
+                        <span class="metric-val">14</span>
+                    </div>
+                </div>
+                <div class="table-container" style="margin-top: 16px;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Department</th>
+                                <th class="text-right">Visits</th>
+                                <th class="text-right">Coverage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Cardiology</td>
+                                <td class="text-right">4</td>
+                                <td class="text-right">90%</td>
+                            </tr>
+                            <tr>
+                                <td>Oncology</td>
+                                <td class="text-right">3</td>
+                                <td class="text-right">85%</td>
+                            </tr>
+                            <tr>
+                                <td>Pharmacy</td>
+                                <td class="text-right">7</td>
+                                <td class="text-right">84%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Service Health Summary -->
+        <div class="glass-card">
+            <div class="card-inner">
+                <div class="card-header-row">
+                    <div>
+                        <div class="card-title">Service Health Summary</div>
+                        <div class="card-sub">Overall service assessment</div>
+                    </div>
+                    <div class="badge-chip bc-green">88 / 100</div>
+                </div>
+                <div style="margin-top: 16px;">
+                    <div class="metric-row">
+                        <span class="metric-label">Service score</span>
+                        <span class="metric-val good">88 / 100</span>
+                    </div>
+                    <div
+                        style="height:6px; width:100%; background:var(--gray-100); border-radius:99px; margin-bottom:16px;">
+                        <div style="width:88%; background:var(--success-500); height:100%; border-radius:99px;"></div>
+                    </div>
+                </div>
+                <div style="margin-top: 12px;">
+                    <div
+                        style="padding: 12px; background: var(--success-50); border-radius: var(--radius-md); margin-bottom: 8px;">
+                        <div style="font-size: 12px; font-weight: 600; color: var(--success-700); margin-bottom: 4px;">✓
+                            Strong</div>
+                        <div style="font-size: 11px; color: var(--success-600);">Delivery TAT, emergency response</div>
+                    </div>
+                    <div style="padding: 12px; background: var(--warning-50); border-radius: var(--radius-md);">
+                        <div style="font-size: 12px; font-weight: 600; color: var(--warning-700); margin-bottom: 4px;">⚠
+                            Watch</div>
+                        <div style="font-size: 11px; color: var(--warning-600);">Billing complaints resolution time
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

@@ -2,6 +2,69 @@
 
 All notable changes to the Hospital CRM Dashboard project will be documented in this file.
 
+## [2.2.0] - 2025-11-25
+
+### Added
+- **Enhanced Stockist Header UI**: Premium redesign with improved layout and interaction patterns
+  - Icon-only action buttons with hover tooltips (Edit, Upload, Archive, More)
+  - Horizontal action button row with consistent spacing
+  - Premium tooltip styling with smooth fade-in animations (300ms)
+  - Proper tooltip positioning that prevents text cutoff
+  - Streamlined visual hierarchy with metadata row
+- **CSV Upload Modal System**: Complete file upload workflow
+  - Drag-and-drop zone with visual feedback on hover/drag
+  - File selection with browser file picker integration
+  - Real-time file validation and status display
+  - Upload progress indicator with spinner animation
+  - Success/error state handling with icons
+  - Helpful upload hints and format guidance
+  - File size and format display
+  - Remove file functionality before upload
+- **New Service Operations Tab**: Dedicated `service-ops-tab.html` component
+- **Modal Component Architecture**: Reusable modal system with:
+  - Backdrop overlay with glassmorphism effect
+  - Header, body, footer structure
+  - Primary and secondary button styles
+  - Close button with hover states
+  - Disabled state handling for all interactive elements
+
+### Changed
+- **Stockist Actions Layout**: Simplified button arrangement
+  - Removed text labels from action buttons for cleaner look
+  - Changed from mixed button styles to consistent icon-only design
+  - Reorganized metadata display for better readability
+  - Improved button hover states and transitions
+- **Tooltip System**: Enhanced tooltip placement and styling
+  - Fixed tooltip cutoff issues on screen edges
+  - Added smooth fade-in/fade-out transitions
+  - Improved z-index layering (z-index: 1000)
+  - Better pointer positioning and arrow styling
+- **Responsive Behavior**: Extended mobile/tablet support
+  - Modal adapts to 95% width on mobile devices
+  - Stockist actions wrap properly on small screens
+  - Full-width filled buttons on mobile
+  - Reduced padding for better space utilization
+
+### Fixed
+- **Tooltip Display Issues**: Resolved text cutoff and positioning problems
+  - Fixed tooltips extending beyond viewport boundaries
+  - Corrected tooltip pointer alignment
+  - Improved tooltip visibility timing
+- **Button Layout**: Fixed action buttons appearing in multiple rows
+  - All action buttons now display in single horizontal row
+  - Consistent spacing between icon-only buttons
+  - Proper flex layout preventing wrapping on desktop
+
+### Technical Details
+- Added 450+ lines of modal and upload component CSS
+- Implemented comprehensive file upload JavaScript handlers
+- Added drag-and-drop event listeners with visual feedback
+- Tooltip positioning with `translate(-50%)` centering
+- Smooth animations with cubic-bezier easing functions
+- Maintained design token consistency across new components
+
+---
+
 ## [2.1.0] - 2024-11-24
 
 ### Added

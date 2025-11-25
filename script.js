@@ -269,13 +269,15 @@ window.addEventListener('resize', () => {
 const tabs = {
     sales: document.getElementById('tab-sales'),
     inventory: document.getElementById('tab-inventory'),
-    credit: document.getElementById('tab-credit')
+    credit: document.getElementById('tab-credit'),
+    service: document.getElementById('tab-service')
 };
 
 const tabButtons = {
     sales: document.getElementById('tab-btn-sales'),
     inventory: document.getElementById('tab-btn-inventory'),
-    credit: document.getElementById('tab-btn-credit')
+    credit: document.getElementById('tab-btn-credit'),
+    service: document.getElementById('tab-btn-service')
 };
 
 /**
@@ -708,7 +710,8 @@ function initializeDashboard() {
     initializeTimePills();
     initializeTimePeriodDropdown();
     initializeChartJS();
-    initializeMobileNav(); // Initialize mobile navigation
+    initializeMobileNav();
+    initializeUpload(); // Initialize upload functionality
 
     // Set default tab (sales)
     if (tabs.sales) {
@@ -718,3 +721,343 @@ function initializeDashboard() {
     console.log('✓ Lupin CRM Dashboard initialized');
 }
 
+
+/* ========================================
+   STOCK STATEMENT UPLOAD
+   ======================================== */
+
+let selectedFile = null;
+let uploadState = 'idle'; // idle, uploading, success, error
+
+/**
+ * Open upload modal
+ */
+function openUploadModal() {
+    const modal = document.getElementById('upload-modal');
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+}
+
+/**
+ * Close upload modal
+ */
+function closeUploadModal() {
+    const modal = document.getElementById('upload-modal');
+    modal.classList.add('hidden');
+    document.body.style.overflow = '';
+    resetUploadModal();
+}
+
+/**
+ * Reset modal to idle state
+ */
+function resetUploadModal() {
+    selectedFile = null;
+    uploadState = 'idle';
+
+    // Hide all state-specific elements
+    document.getElementById('file-details').classList.add('hidden');
+    document.getElementById('upload-progress').classList.add('hidden');
+    document.getElementById('success-message').classList.add('hidden');
+    document.getElementById('error-message').classList.add('hidden');
+
+    // Show/hide buttons
+    document.getElementById('upload-btn').classList.remove('hidden');
+    document.getElementById('upload-btn').disabled = true;
+    document.getElementById('view-inventory-btn').classList.add('hidden');
+    document.getElementById('upload-another-btn').classList.add('hidden');
+    document.getElementById('retry-btn').classList.add('hidden');
+
+    // Reset drop zone
+    document.getElementById('drop-zone').classList.remove('hidden');
+    document.getElementById('file-input').value = '';
+}
+
+/**
+ * Initialize drag & drop
+ */
+function initializeUpload() {
+    const dropZone = document.getElementById('drop-zone');
+    const fileInput = document.getElementById('file-input');
+
+    if (!dropZone || !fileInput) return;
+
+    // Click to browse
+    dropZone.addEventListener('click', () => {
+        fileInput.click();
+    });
+
+    // File selected via input
+    fileInput.addEventListener('change', (e) => {
+        if (e.target.files.length > 0) {
+            handleFileSelect(e.target.files[0]);
+        }
+    });
+
+    // Drag events
+    dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.classList.add('drag-over');
+    });
+
+    dropZone.addEventListener('dragleave', () => {
+        dropZone.classList.remove('drag-over');
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('drag-over');
+        if (e.dataTransfer.files.length > 0) {
+            handleFileSelect(e.dataTransfer.files[0]);
+        }
+    });
+
+    console.log('✓ Upload functionality initialized');
+}
+
+/**
+ * Handle file selection
+ */
+function handleFileSelect(file) {
+    if (!file) return;
+
+    // Validate file type
+    const validTypes = ['.xlsx', '.xls', '.csv', '.pdf'];
+    const fileExt = '.' + file.name.split('.').pop().toLowerCase();
+
+    if (!validTypes.includes(fileExt)) {
+        showFileError('Unsupported file type. Please use XLSX, XLS, CSV, or PDF.');
+        return;
+    }
+
+    // Validate file size (max 10MB)
+    const maxSize = 10 * 1024 * 1024; // 10MB
+    if (file.size > maxSize) {
+        showFileError('File too large. Maximum size is 10MB.');
+        return;
+    }
+
+    selectedFile = file;
+    showFileDetails(file);
+}
+
+/**
+ * Show file details
+ */
+function showFileDetails(file) {
+    document.getElementById('file-name').textContent = file.name;
+    document.getElementById('file-size').textContent = formatFileSize(file.size);
+
+    const status = document.getElementById('file-status');
+    status.textContent = '✓ Ready to upload';
+    status.className = 'file-status ready';
+
+    document.getElementById('file-details').classList.remove('hidden');
+    document.getElementById('upload-btn').disabled = false;
+}
+
+/**
+ * Show file error
+ */
+function showFileError(message) {
+    const fileName = selectedFile ? selectedFile.name : 'Unknown file';
+    document.getElementById('file-name').textContent = fileName;
+    document.getElementById('file-size').textContent = '';
+
+    const status = document.getElementById('file-status');
+    status.textContent = '✗ ' + message;
+    status.className = 'file-status error';
+
+    document.getElementById('file-details').classList.remove('hidden');
+    document.getElementById('upload-btn').disabled = true;
+}
+
+/**
+ * Remove selected file
+ */
+function removeFile() {
+    selectedFile = null;
+    document.getElementById('file-details').classList.add('hidden');
+    document.getElementById('upload-btn').disabled = true;
+    document.getElementById('file-input').value = '';
+}
+
+/**
+ * Upload file and process
+ */
+async function uploadFile() {
+    if (!selectedFile) return;
+
+    uploadState = 'uploading';
+
+    // Hide file details and upload button
+    document.getElementById('file-details').classList.add('hidden');
+    document.getElementById('drop-zone').classList.add('hidden');
+    document.getElementById('upload-btn').classList.add('hidden');
+
+    // Show progress
+    document.getElementById('upload-progress').classList.remove('hidden');
+    document.getElementById('progress-text').textContent = 'Uploading stock statement...';
+
+    // Lock modal
+    const closeBtn = document.querySelector('.modal-close');
+    const cancelBtn = document.querySelector('.btn-secondary');
+    closeBtn.disabled = true;
+    cancelBtn.disabled = true;
+
+    try {
+        // Simulate API call - Phase 1: Upload
+        await simulateUpload();
+
+        // Update progress text
+        document.getElementById('progress-text').textContent = 'Processing and updating inventory metrics...';
+
+        // Simulate API call - Phase 2: Process
+        await new Promise(resolve => setTimeout(resolve, 1500));
+
+        // Success
+        uploadState = 'success';
+        showSuccess();
+        refreshInventoryMetrics();
+
+    } catch (error) {
+        uploadState = 'error';
+        showError(error.message);
+    }
+
+    // Unlock modal
+    closeBtn.disabled = false;
+    cancelBtn.disabled = false;
+}
+
+/**
+ * Simulate upload (mock API)
+ */
+function simulateUpload() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            // 90% success rate for demo
+            if (Math.random() > 0.1) {
+                resolve();
+            } else {
+                reject(new Error('The server is temporarily unavailable. Please retry.'));
+            }
+        }, 2000);
+    });
+}
+
+/**
+ * Show success state
+ */
+function showSuccess() {
+    document.getElementById('upload-progress').classList.add('hidden');
+    document.getElementById('success-message').classList.remove('hidden');
+
+    // Hide cancel, show action buttons
+    document.querySelector('.btn-secondary').classList.add('hidden');
+    document.getElementById('view-inventory-btn').classList.remove('hidden');
+    document.getElementById('upload-another-btn').classList.remove('hidden');
+}
+
+/**
+ * Show error state
+ */
+function showError(message) {
+    document.getElementById('upload-progress').classList.add('hidden');
+    document.getElementById('error-message').classList.remove('hidden');
+    document.getElementById('error-subtitle').textContent = message;
+
+    // Show retry and change file option
+    document.getElementById('retry-btn').classList.remove('hidden');
+    document.getElementById('drop-zone').classList.remove('hidden');
+
+    // Hide upload button
+    document.getElementById('upload-btn').classList.add('hidden');
+}
+
+/**
+ * Retry upload
+ */
+function retryUpload() {
+    document.getElementById('error-message').classList.add('hidden');
+    document.getElementById('retry-btn').classList.add('hidden');
+    document.getElementById('drop-zone').classList.add('hidden');
+
+    if (selectedFile) {
+        uploadFile();
+    }
+}
+
+/**
+ * View updated inventory
+ */
+function viewUpdatedInventory() {
+    closeUploadModal();
+    switchTab('inventory');
+
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/**
+ * Refresh inventory metrics with new data
+ */
+function refreshInventoryMetrics() {
+    // Mock updated data from successful upload
+    const updatedData = {
+        currentStockValue: '₹ 18.50 L',
+        currentStockUnits: '12,450',
+        daysOfInventory: '42 days',
+        normDays: '45 days',
+        overUnderPercent: '-6.7%',
+        nearExpiryExposure: '₹ 1.2 L',
+        nearExpiryPercent: '6.5%',
+        lastUpdated: new Date().toLocaleString('en-IN', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        })
+    };
+
+    console.log('✓ Inventory metrics refreshed:', updatedData);
+
+    // Note: In a real implementation, this would update the actual KPI values
+    // in the Inventory & Supply Chain tab using the API response data
+}
+
+/**
+ * Utility: Format file size
+ */
+function formatFileSize(bytes) {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+}
+
+/**
+ * Download template
+ */
+function downloadTemplate() {
+    // In real implementation, this would trigger actual template download
+    alert('Lupin stock statement template download would start here.\n\nTemplate includes columns:\n• SKU code\n• SKU name\n• Batch no.\n• Expiry date\n• Closing stock qty\n• MRP\n• PTR');
+}
+
+/**
+ * Get directions
+ */
+function getDirections() {
+    // In real implementation, this would open maps or directions
+    alert('Get directions functionality would be triggered here.');
+}
+
+/**
+ * Contact stockist
+ */
+function contactStockist() {
+    // In real implementation, this would open contact dialog or make a call
+    alert('Contact stockist functionality would be triggered here.');
+}
