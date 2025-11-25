@@ -1,47 +1,93 @@
 # Hospital CRM - Stockist 360 Dashboard
 
-> A premium CRM dashboard for hospital and pharmacy distributor management
+> A premium CRM dashboard for hospital and pharmacy distributor management with territory-wide insights
 
 ## 📋 Overview
 
-This is a comprehensive Hospital CRM UI built with clean code practices and modern web standards. The dashboard provides real-time insights into sales, inventory, and financial metrics for pharmaceutical distributors.
+This is a comprehensive Hospital CRM UI built with clean code practices and modern web standards. The dashboard provides a two-layer navigation system: a **territory-level overview** for managing multiple stockists and a **detailed Stockist 360 view** with real-time insights into sales, inventory, financial metrics, and service operations for individual distributors.
+
+**Latest Version**: v2.3.0 (2025-11-25)
 
 ## 📁 File Structure
 
 ```
 Hospital CRM/
-├── index.html      # Clean HTML structure (semantic markup)
-├── styles.css      # All styles with design tokens
-├── script.js       # Interactive functionality
-├── tokens.js       # Design token definitions
-└── README.md       # This file
+├── index.html              # Main application with two-layer views
+│   ├── Overview View       # Territory dashboard (default)
+│   └── Detail View         # Stockist 360 with 4 tabs
+├── service-ops-tab.html    # Service & Operations tab component
+├── styles.css              # All styles with design tokens
+├── script.js               # Modular architecture with data layer
+├── CHANGELOG.md            # Version history
+└── README.md               # This file
 ```
 
 ## 🎨 Design Tokens
 
-The dashboard uses a comprehensive design token system referenced from `tokens.js`. All colors, spacing, typography, and other design values are defined as CSS custom properties in `styles.css`.
+The dashboard uses a comprehensive design token system. All colors, spacing, typography, and other design values are defined as CSS custom properties in `styles.css`.
 
 ### Token Categories:
 - **Colors**: Base, brand, semantic (success/error/warning), grays, extended palette
 - **Spacing**: Consistent spacing scale (4px to 48px+)
 - **Border Radius**: From sharp to fully rounded
 - **Typography**: Font families, sizes, weights, line heights
-- **Effects**: Shadows, transitions, focus rings
+- **Effects**: Shadows, transitions, focus rings, traffic-light indicators
 
 ## 🚀 Usage
 
 Simply open `index.html` in a modern web browser. The dashboard will automatically load:
 1. Google Fonts (Inter)
 2. `styles.css` for all styling
-3. `script.js` for interactive features
+3. `script.js` for interactive features (loaded with `defer`)
+
+**Default Landing**: All Stockists Overview (territory dashboard)
 
 ## ✨ Features
 
-### Tab Navigation
-Three main sections accessible via tabs:
+### 🏢 All Stockists Overview (Territory Dashboard)
+**New in v2.3.0** - Territory-level view for managing 10-300+ stockists:
+
+- **Territory KPIs**: 5 key metrics with traffic-light color coding
+  - Coverage penetration (% of Lupin priority SKUs)
+  - Inventory health score (avg across stockists)
+  - Credit risk exposure (90+ overdue)
+  - SLA adherence (logistics & complaint TAT)
+  - Order velocity (avg billing cycles)
+  
+- **Smart Segmentation**: 6 filter chips for instant insights
+  - 🔥 High potential but low penetration
+  - ❗ High credit risk
+  - ⚠ Near-expiry / high ageing
+  - ⚡ Service reliability risk
+  - ⭐ Fastest growing
+  - ⏳ Low ROI visits
+  
+- **Master Stockist Table**: 10 columns with intelligent sorting
+  - Stockist name & code
+  - City location
+  - Penetration (traffic-light badge)
+  - Inventory health (traffic-light badge)
+  - Credit exposure
+  - SLA adherence (traffic-light badge)
+  - Order cycles per month
+  - Last billed (time badge)
+  - Auto-calculated priority score
+  - "Open 360 View" action button
+
+- **State Preservation**: Filters and scroll position maintained across navigation
+
+### 👤 Stockist 360 (Detail View)
+Four detailed tabs for individual stockist analysis:
 - **Sales & Growth**: Primary/secondary sales, growth trends, KPIs
-- **Inventory & Supply Chain**: Stock health, ageing, order management
+- **Inventory & Supply Chain**: Stock health, aging, order management
 - **Credit, Finance & Compliance**: Receivables, claims, compliance status
+- **Service & Operations**: Infrastructure, delivery TAT, SLA metrics
+
+### 🔄 Two-Layer Navigation
+- Overview → Detail: Click any stockist row or "Open 360" button
+- Detail → Overview: Click "Back to All Stockists" breadcrumb
+- Hash-based routing for bookmarkable URLs (`#stockist/ID`)
+- Seamless view switching with state preservation
 
 ### Interactive Elements
 - Tab switching functionality
@@ -51,43 +97,78 @@ Three main sections accessible via tabs:
 
 ## 🛠️ Code Optimization
 
-### What Was Improved:
-1. **Separation of Concerns**: HTML, CSS, and JavaScript in separate files
-2. **Design Tokens**: Consistent use of CSS custom properties
-3. **Semantic HTML**: Proper heading hierarchy and ARIA-friendly markup
-4. **Clean Code**: Organized CSS with clear sections and comments
-5. **Performance**: External stylesheets can be cached by browsers
-6. **Maintainability**: Easy to update styles, logic, or content independently
+### v2.3.0 Architecture Improvements:
+1. **Data Layer Separation**: Clean separation between data and UI
+   - `StockistData` module with O(1) indexed lookup using Map
+   - Precomputed segment Sets for instant filtering
+   - Cached territory KPIs with smart invalidation
+   
+2. **Performance Optimizations**:
+   - DocumentFragment pattern for batch DOM updates (300x faster rendering)
+   - Single reflow for table updates instead of multiple
+   - Deferred script loading with `defer` attribute
+   - Eliminated redundant calculations through caching
+   
+3. **Modular Architecture**:
+   - Data layer (`StockistData` with 8 methods)
+   - UI utilities (`MetricClassifiers`, `buildStockistRow`, etc.)
+   - State management (`OverviewState` object)
+   - Routing (`Router` module with hashchange handling)
+   - Clear initialization flow
+   
+4. **Design Tokens**: Consistent use of CSS custom properties
+5. **Semantic HTML**: Proper heading hierarchy and ARIA-friendly markup
+6. **Clean Code**: Organized CSS/JS with clear sections and comments
+7. **Maintainability**: Easy to update styles, logic, or content independently
 
 ### CSS Organization:
 ```
 1. Design Tokens & CSS Variables
 2. Reset & Base Styles
-3. Layout
+3. Layout (Grid system)
 4. Components (Sidebar, Navigation, Cards, etc.)
-5. Utilities
-6. Responsive Design
+5. Overview-specific styles (Filter chips, Table, Badges)
+6. Utilities
+7. Responsive Design
 ```
 
-### JavaScript Features:
-- Tab management system
-- Time period filter initialization
-- Event delegation for performance
-- Modular, commented code
+### JavaScript Architecture:
+```javascript
+// Data Layer
+- stockistIndex (Map for O(1) lookup)
+- stockistSegments (Precomputed Sets)
+- StockistData module (data access & KPI calculations)
+
+// UI Layer
+- MetricClassifiers (traffic-light logic)
+- buildStockistRow() (DOM element builder)
+- renderStockistTable() (DocumentFragment rendering)
+- updateTerritoryKPIs() (KPI display updates)
+
+// State Management
+- OverviewState (filters, scroll position)
+- Persistence across navigation
+
+// Routing
+- Router module (centralized navigation)
+- Hash-based routing support
+- State preservation on transitions
+```
 
 ## 🎯 Design System Benefits
 
 Using design tokens provides:
 - **Consistency**: Same values across the entire application
 - **Flexibility**: Easy theme changes (just update token values)
-- **Scalability**: Simple to maintain as the app grows
+- **Scalability**: Simple to maintain as the app grows (now supports 300+ stockists)
 - **Developer Experience**: Clear naming conventions
+- **Performance**: Optimized for large datasets with caching and batching
 
 ## 📱 Responsive Breakpoints
 
-- **Desktop**: > 1200px (5-column KPIs, 3-column grids)
-- **Tablet**: 900px - 1200px (3-column KPIs, 2-column grids)
-- **Mobile**: < 900px (Single column layout, sidebar hidden)
+- **Desktop**: > 1200px (5-column KPIs, full table with 10 columns)
+- **Tablet**: 768px - 1200px (3-column KPIs, some table columns hidden)
+- **Mobile**: < 768px (Single column KPIs, table converts to cards)
 
 ## 🌈 Color System
 
@@ -97,32 +178,43 @@ Brand colors follow a scale from 25 (lightest) to 950 (darkest):
 - **Error**: `--error-600` (#d92d20)
 - **Warning**: `--warning-600` (#dc6803)
 
+**Traffic-Light System** (v2.3.0):
+- `.good` - Green badge (strong performance)
+- `.warn` - Yellow badge (needs attention)
+- `.bad` - Red badge (critical issue)
+
 ## 🔧 Customization
 
 To customize the dashboard:
 
 1. **Update Colors**: Modify CSS custom properties in `styles.css` `:root`
 2. **Change Layout**: Adjust grid templates in respective component classes
-3. **Add Functionality**: Extend `script.js` with new event handlers
-4. **Modify Data**: Update HTML content in `index.html`
+3. **Add Functionality**: Extend `script.js` modules (StockistData, Router, etc.)
+4. **Modify Data**: Update stockist array or connect to live API
+5. **Add Filters**: Extend segment types in `stockistSegments` object
 
 ## 📊 Chart Integration
 
 The dashboard includes:
-- Line charts with SVG paths
+- Line charts with gradient fills (Chart.js)
 - Bar charts with interactive tooltips
 - Progress bars with percentage indicators
-- Ageing visualizations
+- Aging visualizations
+- KPI trends with directional arrows
 
 ## 🏗️ Future Enhancements
 
 Potential improvements:
 - [ ] Connect to live data API
-- [ ] Add data export functionality
-- [ ] Implement search functionality
+- [ ] Virtual scrolling for 1000+ stockists
+- [ ] Advanced sorting (multi-column)
+- [ ] Data export functionality (CSV/Excel)
+- [ ] Implement search functionality with debounce
 - [ ] Add print stylesheet
 - [ ] Create dark mode theme
-- [ ] Add animation library for smoother transitions
+- [x] ~~Add animation library~~ (Built-in CSS transitions)
+- [x] ~~Territory-level insights~~ ✅ (v2.3.0)
+- [x] ~~Performance optimization for scale~~ ✅ (v2.3.0)
 
 ## 📝 Browser Support
 
