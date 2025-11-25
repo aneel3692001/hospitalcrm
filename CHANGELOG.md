@@ -2,6 +2,89 @@
 
 All notable changes to the Hospital CRM Dashboard project will be documented in this file.
 
+## [2.3.0] - 2025-11-25
+
+### Added
+- **All Stockists Overview Dashboard**: Territory-level view for managing 10-300+ stockists
+  - Territory KPI strip with 5 key metrics (Coverage, Inventory Health, Credit Risk, SLA, Order Velocity)
+  - Traffic-light color coding for instant risk/opportunity identification
+  - Smart segmentation filter chips (6 segments: High Potential, Credit Risk, Near-Expiry, Service Risk, Fastest Growing, Low ROI)
+  - Master stockist table with 10 columns and clickable rows
+  - "Open 360 View" action buttons for each stockist
+  - Horizontal scrollable filter chips with active state management
+  - Clear all filters functionality
+- **Two-Layer Navigation Architecture**: Seamless view switching
+  - Overview layer for territory-wide insights
+  - Detail layer for single stockist deep-dive
+  - "Back to All Stockists" breadcrumb navigation
+  - Hash-based routing (`#stockist/ID`) for bookmarkable URLs
+  - State preservation across navigation (filters, scroll position)
+- **Mock Data Layer**: 10 realistic stockist records
+  - Varied metrics across segments for testing
+  - Automatic territory KPI calculations
+  - Segment assignment (high-potential, credit-risk, near-expiry, etc.)
+
+### Changed
+- **Code Architecture Refactoring**: Comprehensive optimization for scalability
+  - Separated data layer from UI layer for better maintainability
+  - Introduced `StockistData` module with O(1) indexed lookup using Map
+  - Precomputed segment Sets for instant filtering (no re-computation)
+  - Cached territory KPIs with invalidation strategy
+  - Centralized `Router` module for navigation management
+  - Created `OverviewState` object for state preservation
+  - Extracted `MetricClassifiers` utilities for traffic-light logic
+  - Implemented DocumentFragment pattern for optimized table rendering
+  - Scroll position save/restore on navigation
+- **Performance Optimizations**:
+  - Table rendering now uses single DOM update (1 reflow vs 10+)
+  - Stockist lookup changed from O(n) to O(1) using Map index
+  - Segment filtering uses precomputed Sets instead of array iterations
+  - KPI calculations cached and reused until data changes
+  - Added `defer` attribute to script tag for better page load
+- **Code Organization**: Modular structure with clear separation of concerns
+  - Data layer (StockistData module)
+  - UI utilities (MetricClassifiers, buildStockistRow, renderStockistTable)
+  - State management (OverviewState)
+  - Routing (Router module)
+  - Initialization logic
+
+### Technical Details
+- **Backward Compatibility**: All existing functionality preserved
+  - Global `showOverview()` and `showDetail()` functions maintained
+  - Existing HTML onclick handlers continue to work
+  - No visual or behavioral changes to Stockist 360 detail view
+  - All 4 tabs (Sales, Inventory, Credit, Service Operations) unchanged
+- **Scalability Features**:
+  - Code now supports 300+ stockists efficiently
+  - DocumentFragment rendering pattern for batch DOM updates
+  - Separated `buildRow()` logic ready for virtual scrolling/pagination
+  - Modular filter system extensible to additional criteria
+- **State Management**:
+  - Active segment filters preserved across navigation
+  - Scroll position saved before leaving overview
+  - URL hash synchronized with current view
+  - Filter UI state automatically updated
+- **New CSS Classes**:
+  - `.segment-filters-wrapper` - Horizontal scrollable container
+  - `.filter-chip` - Segmentation filter pills with active states
+  - `.stockist-master-table` - Territory-wide stockist table
+  - `.metric-badge` - Traffic-light indicators (good/warn/bad)
+  - `.back-link` - Navigation breadcrumb styling
+  - `.last-billed-badge` - Time-based status badges
+- **JavaScript Modules** (412 lines added/refactored):
+  - `stockistIndex` Map for O(1) lookup
+  - `stockistSegments` object with precomputed Sets
+  - `StockistData` module (8 methods)
+  - `MetricClassifiers` object (5 classification functions)
+  - `OverviewState` object (5 state management methods)
+  - `Router` object (3 navigation methods + hashchange handler)
+  - Optimized initialization with proper event delegation
+
+### Fixed
+- Graceful handling of missing/null data in metric calculations
+- Proper null checks for DOM elements before manipulation
+- Filter state consistency when using browser back/forward buttons
+
 ## [2.2.0] - 2025-11-25
 
 ### Added

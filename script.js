@@ -343,6 +343,167 @@ if (document.readyState === 'loading') {
 window.switchTab = switchTab;
 
 /* ========================================
+   STOCKISTS DATA (TERRITORY OVERVIEW)
+   ======================================== */
+
+// Mock data for 10 stockists in territory
+const stockists = [
+    {
+        id: 'IN-MUM-SWP-014',
+        name: 'Shweta Pharma Distributors',
+        city: 'Mumbai',
+        category: 'A',
+        penetration: 42,
+        inventoryHealth: 86,
+        creditExposure: 482000,
+        slaAdherence: 93,
+        orderCycles: 3.2,
+        lastBilledDays: 12,
+        priorityScore: 78,
+        segments: ['high-potential']
+    },
+    {
+        id: 'IN-DEL-MED-032',
+        name: 'MedPlus Distributors',
+        city: 'Delhi',
+        category: 'B',
+        penetration: 68,
+        inventoryHealth: 72,
+        creditExposure: 1250000,
+        slaAdherence: 88,
+        orderCycles: 2.8,
+        lastBilledDays: 45,
+        priorityScore: 65,
+        segments: ['credit-risk', 'service-risk']
+    },
+    {
+        id: 'IN-BLR-APO-021',
+        name: 'Apollo Medical Supplies',
+        city: 'Bangalore',
+        category: 'A',
+        penetration: 75,
+        inventoryHealth: 91,
+        creditExposure: 385000,
+        slaAdherence: 96,
+        orderCycles: 4.2,
+        lastBilledDays: 8,
+        priorityScore: 92,
+        segments: ['fastest-growing']
+    },
+    {
+        id: 'IN-PUN-MER-018',
+        name: 'Mercury Pharma Co.',
+        city: 'Pune',
+        category: 'C',
+        penetration: 35,
+        inventoryHealth: 68,
+        creditExposure: 215000,
+        slaAdherence: 82,
+        orderCycles: 2.1,
+        lastBilledDays: 28,
+        priorityScore: 48,
+        segments: ['high-potential', 'service-risk', 'near-expiry']
+    },
+    {
+        id: 'IN-HYD-VIT-009',
+        name: 'Vitality Medical Stores',
+        city: 'Hyderabad',
+        category: 'B',
+        penetration: 58,
+        inventoryHealth: 79,
+        creditExposure: 675000,
+        slaAdherence: 91,
+        orderCycles: 3.5,
+        lastBilledDays: 15,
+        priorityScore: 71,
+        segments: []
+    },
+    {
+        id: 'IN-CHN-LIF-026',
+        name: 'Lifespan Distributors',
+        city: 'Chennai',
+        category: 'A',
+        penetration: 82,
+        inventoryHealth: 88,
+        creditExposure: 425000,
+        slaAdherence: 94,
+        orderCycles: 3.9,
+        lastBilledDays: 6,
+        priorityScore: 85,
+        segments: []
+    },
+    {
+        id: 'IN-KOL-HEA-015',
+        name: 'HealthFirst Medical',
+        city: 'Kolkata',
+        category: 'B',
+        penetration: 48,
+        inventoryHealth: 71,
+        creditExposure: 890000,
+        slaAdherence: 86,
+        orderCycles: 2.6,
+        lastBilledDays: 62,
+        priorityScore: 54,
+        segments: ['credit-risk', 'near-expiry']
+    },
+    {
+        id: 'IN-MUM-CAR-041',
+        name: 'CarePlus Pharmacy Chain',
+        city: 'Mumbai',
+        category: 'A',
+        penetration: 45,
+        inventoryHealth: 92,
+        creditExposure: 320000,
+        slaAdherence: 97,
+        orderCycles: 4.5,
+        lastBilledDays: 5,
+        priorityScore: 81,
+        segments: ['high-potential', 'fastest-growing']
+    },
+    {
+        id: 'IN-DEL-UNI-029',
+        name: 'UniMed Suppliers',
+        city: 'Delhi',
+        category: 'C',
+        penetration: 29,
+        inventoryHealth: 64,
+        creditExposure: 145000,
+        slaAdherence: 79,
+        orderCycles: 1.8,
+        lastBilledDays: 94,
+        priorityScore: 38,
+        segments: ['high-potential', 'service-risk', 'near-expiry', 'low-roi']
+    },
+    {
+        id: 'IN-BLR-GRE-033',
+        name: 'GreenCross Pharmaceuticals',
+        city: 'Bangalore',
+        category: 'B',
+        penetration: 71,
+        inventoryHealth: 85,
+        creditExposure: 520000,
+        slaAdherence: 92,
+        orderCycles: 3.7,
+        lastBilledDays: 11,
+        priorityScore: 76,
+        segments: []
+    }
+];
+
+// Territory KPI calculations
+function calculateTerritoryKPIs() {
+    const totalStockists = stockists.length;
+
+    return {
+        coveragePenetration: Math.round(stockists.reduce((sum, s) => sum + s.penetration, 0) / totalStockists),
+        inventoryHealthScore: Math.round(stockists.reduce((sum, s) => sum + s.inventoryHealth, 0) / totalStockists),
+        creditRiskExposure: stockists.reduce((sum, s) => sum + s.creditExposure, 0),
+        slaAdherence: Math.round(stockists.reduce((sum, s) => sum + s.slaAdherence, 0) / totalStockists),
+        orderVelocity: (stockists.reduce((sum, s) => sum + s.orderCycles, 0) / totalStockists).toFixed(1)
+    };
+}
+
+/* ========================================
    TIME PERIOD DATA MANAGEMENT
    ======================================== */
 
@@ -369,6 +530,12 @@ const dataByPeriod = {
             dso: '42 Days', dsoTrend: '+1 day',
             claims: '₹ 2.1 L', claimsTrend: '+4%',
             gst: 'Compliant', gstNote: 'Returns filed'
+        },
+        service: {
+            infraScore: '81', deliveryTAT: '6.8 hrs', deliveryTATClass: 'good',
+            complaintTAT: '1.9 days', complaintTATClass: 'warn',
+            slaAdherence: '91%', slaAdherenceClass: 'good',
+            supportScore: '4.5', supportScoreClass: 'good'
         }
     },
     'last-week': {
@@ -392,6 +559,12 @@ const dataByPeriod = {
             dso: '41 Days', dsoTrend: 'stable',
             claims: '₹ 2.0 L', claimsTrend: '+2%',
             gst: 'Compliant', gstNote: 'Returns filed'
+        },
+        service: {
+            infraScore: '80', deliveryTAT: '7.0 hrs', deliveryTATClass: 'good',
+            complaintTAT: '2.0 days', complaintTATClass: 'warn',
+            slaAdherence: '90%', slaAdherenceClass: 'good',
+            supportScore: '4.4', supportScoreClass: 'good'
         }
     },
     'this-month': {
@@ -415,6 +588,12 @@ const dataByPeriod = {
             dso: '42 Days', dsoTrend: '+2 days',
             claims: '₹ 2.2 L', claimsTrend: '+5%',
             gst: 'Compliant', gstNote: 'Returns filed'
+        },
+        service: {
+            infraScore: '82', deliveryTAT: '6.5 hrs', deliveryTATClass: 'good',
+            complaintTAT: '1.8 days', complaintTATClass: 'warn',
+            slaAdherence: '93%', slaAdherenceClass: 'good',
+            supportScore: '4.6', supportScoreClass: 'good'
         }
     },
     'last-month': {
@@ -438,6 +617,12 @@ const dataByPeriod = {
             dso: '40 Days', dsoTrend: '+1 day',
             claims: '₹ 2.1 L', claimsTrend: '+3%',
             gst: 'Compliant', gstNote: 'Returns filed'
+        },
+        service: {
+            infraScore: '79', deliveryTAT: '6.9 hrs', deliveryTATClass: 'good',
+            complaintTAT: '2.1 days', complaintTATClass: 'warn',
+            slaAdherence: '89%', slaAdherenceClass: 'warn',
+            supportScore: '4.3', supportScoreClass: 'good'
         }
     },
     'last-3-months': {
@@ -461,6 +646,12 @@ const dataByPeriod = {
             dso: '42 Days', dsoTrend: '+2 days',
             claims: '₹ 2.2 L', claimsTrend: '+5%',
             gst: 'Compliant', gstNote: 'Returns filed'
+        },
+        service: {
+            infraScore: '82', deliveryTAT: '6.4 hrs', deliveryTATClass: 'good',
+            complaintTAT: '1.8 days', complaintTATClass: 'warn',
+            slaAdherence: '93%', slaAdherenceClass: 'good',
+            supportScore: '4.6', supportScoreClass: 'good'
         }
     },
     'last-6-months': {
@@ -484,6 +675,12 @@ const dataByPeriod = {
             dso: '39 Days', dsoTrend: 'stable',
             claims: '₹ 1.9 L', claimsTrend: '+2%',
             gst: 'Compliant', gstNote: 'All returns filed'
+        },
+        service: {
+            infraScore: '84', deliveryTAT: '6.0 hrs', deliveryTATClass: 'good',
+            complaintTAT: '1.6 days', complaintTATClass: 'good',
+            slaAdherence: '94%', slaAdherenceClass: 'good',
+            supportScore: '4.7', supportScoreClass: 'good'
         }
     },
     'last-year': {
@@ -507,6 +704,12 @@ const dataByPeriod = {
             dso: '37 Days', dsoTrend: '-1 day',
             claims: '₹ 1.6 L', claimsTrend: '-2%',
             gst: 'Compliant', gstNote: 'All returns filed'
+        },
+        service: {
+            infraScore: '85', deliveryTAT: '5.8 hrs', deliveryTATClass: 'good',
+            complaintTAT: '1.5 days', complaintTATClass: 'good',
+            slaAdherence: '95%', slaAdherenceClass: 'good',
+            supportScore: '4.8', supportScoreClass: 'good'
         }
     },
     'all': {
@@ -530,6 +733,12 @@ const dataByPeriod = {
             dso: '35 Days', dsoTrend: '-2 days',
             claims: '₹ 1.4 L', claimsTrend: '-5%',
             gst: 'Compliant', gstNote: 'All historical returns filed'
+        },
+        service: {
+            infraScore: '87', deliveryTAT: '5.5 hrs', deliveryTATClass: 'good',
+            complaintTAT: '1.4 days', complaintTATClass: 'good',
+            slaAdherence: '96%', slaAdherenceClass: 'good',
+            supportScore: '4.9', supportScoreClass: 'good'
         }
     }
 };
@@ -622,6 +831,58 @@ function updateCreditKPIs(data) {
 }
 
 /**
+ * Update Service Operations tab KPIs
+ */
+function updateServiceKPIs(data) {
+    const serviceKPIs = document.querySelectorAll('#tab-service .kpi-strip .kpi-card');
+
+    // Update Infra readiness score (KPI 0)
+    if (serviceKPIs[0]) {
+        const infraValue = serviceKPIs[0].querySelector('.kpi-value');
+        if (infraValue) {
+            infraValue.textContent = data.infraScore + ' / 100';
+        }
+    }
+
+    // Update Avg delivery TAT (KPI 1)
+    if (serviceKPIs[1]) {
+        const deliveryValue = serviceKPIs[1].querySelector('.kpi-value');
+        if (deliveryValue) {
+            deliveryValue.textContent = data.deliveryTAT;
+            // Update class based on performance
+            deliveryValue.className = 'kpi-value ' + data.deliveryTATClass;
+        }
+    }
+
+    // Update Complaint resolution TAT (KPI 2)
+    if (serviceKPIs[2]) {
+        const complaintValue = serviceKPIs[2].querySelector('.kpi-value');
+        if (complaintValue) {
+            complaintValue.textContent = data.complaintTAT;
+            complaintValue.className = 'kpi-value ' + data.complaintTATClass;
+        }
+    }
+
+    // Update SLA adherence (KPI 3)
+    if (serviceKPIs[3]) {
+        const slaValue = serviceKPIs[3].querySelector('.kpi-value');
+        if (slaValue) {
+            slaValue.textContent = data.slaAdherence;
+            slaValue.className = 'kpi-value ' + data.slaAdherenceClass;
+        }
+    }
+
+    // Update Support responsiveness (KPI 4)
+    if (serviceKPIs[4]) {
+        const supportValue = serviceKPIs[4].querySelector('.kpi-value');
+        if (supportValue) {
+            supportValue.textContent = data.supportScore + ' / 5';
+            supportValue.className = 'kpi-value ' + data.supportScoreClass;
+        }
+    }
+}
+
+/**
  * Update all dashboard data based on selected time period
  */
 function updateDashboardData(period) {
@@ -636,6 +897,7 @@ function updateDashboardData(period) {
     updateSalesKPIs(data.sales);
     updateInventoryKPIs(data.inventory);
     updateCreditKPIs(data.credit);
+    updateServiceKPIs(data.service);
 
     console.log(`✓ Dashboard updated for period: ${period}`);
 }
@@ -1061,3 +1323,457 @@ function contactStockist() {
     // In real implementation, this would open contact dialog or make a call
     alert('Contact stockist functionality would be triggered here.');
 }
+
+/* ========================================
+   OVERVIEW VIEW - DATA LAYER
+   ======================================== */
+
+// Indexed stockist lookup for O(1) access
+const stockistIndex = new Map(stockists.map(s => [s.id, s]));
+
+// Precomputed segment Sets for fast filtering
+const stockistSegments = {
+    'high-potential': new Set(stockists.filter(s => s.segments.includes('high-potential')).map(s => s.id)),
+    'credit-risk': new Set(stockists.filter(s => s.segments.includes('credit-risk')).map(s => s.id)),
+    'near-expiry': new Set(stockists.filter(s => s.segments.includes('near-expiry')).map(s => s.id)),
+    'service-risk': new Set(stockists.filter(s => s.segments.includes('service-risk')).map(s => s.id)),
+    'fastest-growing': new Set(stockists.filter(s => s.segments.includes('fastest-growing')).map(s => s.id)),
+    'low-roi': new Set(stockists.filter(s => s.segments.includes('low-roi')).map(s => s.id))
+};
+
+/**
+ * Data access utilities
+ */
+const StockistData = {
+    /**
+     * Get stockist by ID (O(1) lookup)
+     */
+    getById(id) {
+        return stockistIndex.get(id);
+    },
+
+    /**
+     * Get all stockists
+     */
+    getAll() {
+        return stockists;
+    },
+
+    /**
+     * Filter stockists by active segments
+     * Uses precomputed Sets for performance
+     */
+    filterBySegments(activeSegments) {
+        if (activeSegments.length === 0) {
+            return stockists;
+        }
+
+        // Intersect stockists that have ALL active segments
+        return stockists.filter(stockist => {
+            return activeSegments.every(segment =>
+                stockistSegments[segment] && stockistSegments[segment].has(stockist.id)
+            );
+        });
+    },
+
+    /**
+     * Compute territory KPIs with caching
+     */
+    _cachedKPIs: null,
+
+    computeTerritoryKPIs() {
+        if (this._cachedKPIs) {
+            return this._cachedKPIs;
+        }
+
+        const total = stockists.length;
+        if (total === 0) {
+            return {
+                coveragePenetration: 0,
+                inventoryHealthScore: 0,
+                creditRiskExposure: 0,
+                slaAdherence: 0,
+                orderVelocity: '0.0'
+            };
+        }
+
+        this._cachedKPIs = {
+            coveragePenetration: Math.round(
+                stockists.reduce((sum, s) => sum + (s.penetration || 0), 0) / total
+            ),
+            inventoryHealthScore: Math.round(
+                stockists.reduce((sum, s) => sum + (s.inventoryHealth || 0), 0) / total
+            ),
+            creditRiskExposure: stockists.reduce((sum, s) => sum + (s.creditExposure || 0), 0),
+            slaAdherence: Math.round(
+                stockists.reduce((sum, s) => sum + (s.slaAdherence || 0), 0) / total
+            ),
+            orderVelocity: (
+                stockists.reduce((sum, s) => sum + (s.orderCycles || 0), 0) / total
+            ).toFixed(1)
+        };
+
+        return this._cachedKPIs;
+    },
+
+    /**
+     * Invalidate KPI cache (call when data changes)
+     */
+    invalidateCache() {
+        this._cachedKPIs = null;
+    },
+
+    /**
+     * Compute segment counts
+     */
+    getSegmentCounts() {
+        return {
+            'high-potential': stockistSegments['high-potential'].size,
+            'credit-risk': stockistSegments['credit-risk'].size,
+            'near-expiry': stockistSegments['near-expiry'].size,
+            'service-risk': stockistSegments['service-risk'].size,
+            'fastest-growing': stockistSegments['fastest-growing'].size,
+            'low-roi': stockistSegments['low-roi'].size
+        };
+    }
+};
+
+/* ========================================
+   OVERVIEW VIEW - UI UTILITIES
+   ======================================== */
+
+/**
+ * Traffic light classification utilities
+ */
+const MetricClassifiers = {
+    penetration(val) {
+        if (val == null) return 'bad';
+        return val >= 60 ? 'good' : val >= 40 ? 'warn' : 'bad';
+    },
+
+    inventoryHealth(val) {
+        if (val == null) return 'bad';
+        return val >= 85 ? 'good' : val >= 70 ? 'warn' : 'bad';
+    },
+
+    creditExposure(val) {
+        if (val == null) return 'bad';
+        return val < 500000 ? 'good' : val < 1000000 ? 'warn' : 'bad';
+    },
+
+    sla(val) {
+        if (val == null) return 'bad';
+        return val >= 92 ? 'good' : val >= 85 ? 'warn' : 'bad';
+    },
+
+    lastBilled(days) {
+        if (days == null) return 'overdue';
+        return days <= 30 ? 'recent' : days <= 60 ? 'moderate' : 'overdue';
+    }
+};
+
+/**
+ * Build a single table row (DOM element)
+ */
+function buildStockistRow(stockist) {
+    const row = document.createElement('tr');
+    row.onclick = () => Router.navigateToDetail(stockist.id);
+
+    row.innerHTML = `
+        <td>
+            <div class="stockist-name-cell">
+                <div class="stockist-name-primary">${stockist.name || 'N/A'}</div>
+                <div class="stockist-code">${stockist.id || ''}</div>
+            </div>
+        </td>
+        <td>${stockist.city || 'N/A'}</td>
+        <td><span class="metric-badge ${MetricClassifiers.penetration(stockist.penetration)}">${stockist.penetration || 0}%</span></td>
+        <td><span class="metric-badge ${MetricClassifiers.inventoryHealth(stockist.inventoryHealth)}">${stockist.inventoryHealth || 'N/A'}</span></td>
+        <td>₹${stockist.creditExposure ? (stockist.creditExposure / 100000).toFixed(2) : '0.00'} L</td>
+        <td><span class="metric-badge ${MetricClassifiers.sla(stockist.slaAdherence)}">${stockist.slaAdherence || 0}%</span></td>
+        <td>${stockist.orderCycles || '0.0'}</td>
+        <td><span class="last-billed-badge ${MetricClassifiers.lastBilled(stockist.lastBilledDays)}">${stockist.lastBilledDays || 0}d</span></td>
+        <td>${stockist.priorityScore || 0}</td>
+        <td><button class="btn-open-360" onclick="event.stopPropagation(); Router.navigateToDetail('${stockist.id}');">Open 360</button></td>
+    `;
+
+    return row;
+}
+
+/**
+ * Render stockist table rows using DocumentFragment for performance
+ */
+function renderStockistTable(stockistList) {
+    const tbody = document.getElementById('stockist-table-body');
+    const fragment = document.createDocumentFragment();
+
+    // Build all rows in memory first
+    stockistList.forEach(stockist => {
+        fragment.appendChild(buildStockistRow(stockist));
+    });
+
+    // Single DOM update
+    tbody.innerHTML = '';
+    tbody.appendChild(fragment);
+
+    // Update count
+    const countElement = document.getElementById('stockist-count');
+    if (countElement) {
+        countElement.textContent = stockistList.length;
+    }
+}
+
+/**
+ * Update territory KPI display
+ */
+function updateTerritoryKPIs() {
+    const kpis = StockistData.computeTerritoryKPIs();
+
+    const updateKPI = (id, value, className = null) => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.textContent = value;
+            if (className) {
+                element.className = 'kpi-value ' + className;
+            }
+        }
+    };
+
+    updateKPI('territory-penetration', `${kpis.coveragePenetration}%`,
+        MetricClassifiers.penetration(kpis.coveragePenetration));
+
+    updateKPI('territory-inventory', kpis.inventoryHealthScore,
+        MetricClassifiers.inventoryHealth(kpis.inventoryHealthScore));
+
+    updateKPI('territory-credit', `₹ ${(kpis.creditRiskExposure / 10000000).toFixed(2)} Cr`);
+
+    updateKPI('territory-sla', `${kpis.slaAdherence}%`,
+        MetricClassifiers.sla(kpis.slaAdherence));
+
+    updateKPI('territory-velocity', kpis.orderVelocity);
+}
+
+/* ========================================
+   OVERVIEW VIEW - STATE MANAGEMENT
+   ======================================== */
+
+const OverviewState = {
+    activeSegments: [],
+    scrollPosition: 0,
+
+    /**
+     * Save current scroll position
+     */
+    saveScrollPosition() {
+        const overviewView = document.getElementById('overview-view');
+        if (overviewView) {
+            this.scrollPosition = window.scrollY;
+        }
+    },
+
+    /**
+     * Restore saved scroll position
+     */
+    restoreScrollPosition() {
+        if (this.scrollPosition > 0) {
+            window.scrollTo(0, this.scrollPosition);
+        }
+    },
+
+    /**
+     * Apply filters and re-render table
+     */
+    applyFilters() {
+        const filtered = StockistData.filterBySegments(this.activeSegments);
+        renderStockistTable(filtered);
+
+        // Show/hide clear button
+        const clearBtn = document.querySelector('.clear-filters');
+        if (clearBtn) {
+            if (this.activeSegments.length > 0) {
+                clearBtn.classList.remove('hidden');
+            } else {
+                clearBtn.classList.add('hidden');
+            }
+        }
+    },
+
+    /**
+     * Toggle segment filter
+     */
+    toggleSegment(segment) {
+        const index = this.activeSegments.indexOf(segment);
+        if (index > -1) {
+            this.activeSegments.splice(index, 1);
+        } else {
+            this.activeSegments.push(segment);
+        }
+        this.applyFilters();
+    },
+
+    /**
+     * Clear all filters
+     */
+    clearFilters() {
+        this.activeSegments = [];
+        this.applyFilters();
+
+        // Update chip UI
+        document.querySelectorAll('.filter-chip:not(.clear-filters)').forEach(chip => {
+            chip.classList.remove('active');
+        });
+    }
+};
+
+/* ========================================
+   ROUTING & NAVIGATION
+   ======================================== */
+
+const Router = {
+    /**
+     * Navigate to overview
+     */
+    navigateToOverview() {
+        // Save detail view state if needed
+
+        // Show overview, hide detail
+        const overviewView = document.getElementById('overview-view');
+        const detailView = document.getElementById('detail-view');
+
+        if (overviewView) overviewView.classList.remove('hidden');
+        if (detailView) detailView.classList.add('hidden');
+
+        // Update URL
+        window.location.hash = '';
+
+        // Restore scroll position
+        setTimeout(() => OverviewState.restoreScrollPosition(), 0);
+    },
+
+    /**
+     * Navigate to stockist detail
+     */
+    navigateToDetail(stockistId) {
+        // Save overview scroll position
+        OverviewState.saveScrollPosition();
+
+        // Hide overview, show detail
+        const overviewView = document.getElementById('overview-view');
+        const detailView = document.getElementById('detail-view');
+
+        if (overviewView) overviewView.classList.add('hidden');
+        if (detailView) detailView.classList.remove('hidden');
+
+        // Update URL
+        window.location.hash = `stockist/${stockistId}`;
+
+        // Load stockist data
+        const stockist = StockistData.getById(stockistId);
+        if (stockist) {
+            const nameElement = document.querySelector('.stockist-name');
+            if (nameElement) {
+                nameElement.textContent = stockist.name || 'Unknown Stockist';
+            }
+            // In full implementation, would load all stockist-specific data
+        }
+
+        // Scroll to top of detail view
+        window.scrollTo(0, 0);
+    },
+
+    /**
+     * Handle hash change events
+     */
+    handleRouteChange() {
+        const hash = window.location.hash;
+
+        if (hash.startsWith('#stockist/')) {
+            const stockistId = hash.substring(10);
+            const stockist = StockistData.getById(stockistId);
+            if (stockist) {
+                // Navigate to detail without updating hash (already set)
+                const overviewView = document.getElementById('overview-view');
+                const detailView = document.getElementById('detail-view');
+
+                if (overviewView) overviewView.classList.add('hidden');
+                if (detailView) detailView.classList.remove('hidden');
+
+                // Update detail view content
+                const nameElement = document.querySelector('.stockist-name');
+                if (nameElement) {
+                    nameElement.textContent = stockist.name || 'Unknown Stockist';
+                }
+            } else {
+                // Invalid stockist ID, go to overview
+                this.navigateToOverview();
+            }
+        } else {
+            // Show overview
+            const overviewView = document.getElementById('overview-view');
+            const detailView = document.getElementById('detail-view');
+
+            if (overviewView) overviewView.classList.remove('hidden');
+            if (detailView) detailView.classList.add('hidden');
+        }
+    }
+};
+
+/* ========================================
+   INITIALIZATION
+   ======================================== */
+
+/**
+ * Initialize Overview View
+ */
+function initializeOverview() {
+    // Update territory KPIs
+    updateTerritoryKPIs();
+
+    // Render initial table (all stockists)
+    renderStockistTable(StockistData.getAll());
+
+    // Attach filter chip listeners
+    document.querySelectorAll('.filter-chip:not(.clear-filters)').forEach(chip => {
+        chip.addEventListener('click', function () {
+            const segment = this.dataset.filter;
+
+            // Toggle active state
+            if (OverviewState.activeSegments.includes(segment)) {
+                this.classList.remove('active');
+            } else {
+                this.classList.add('active');
+            }
+
+            // Apply filter
+            OverviewState.toggleSegment(segment);
+        });
+    });
+
+    // Clear filters button
+    const clearBtn = document.querySelector('.clear-filters');
+    if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+            OverviewState.clearFilters();
+        });
+    }
+
+    // Set up hash routing
+    window.addEventListener('hashchange', () => Router.handleRouteChange());
+
+    // Handle initial route
+    Router.handleRouteChange();
+
+    console.log('✓ Overview initialized with', stockists.length, 'stockists');
+}
+
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeOverview);
+} else {
+    initializeOverview();
+}
+
+// Backward-compatible global functions (for HTML onclick attributes)
+window.showOverview = () => Router.navigateToOverview();
+window.showDetail = (id) => Router.navigateToDetail(id);
+

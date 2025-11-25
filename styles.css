@@ -2283,3 +2283,195 @@ tfoot td {
         justify-content: space-between;
     }
 }
+/* ========================================
+   ALL STOCKISTS OVERVIEW
+   ======================================== */
+
+/* Back Button */
+.breadcrumb {
+    display: flex;
+    align-items: center;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--brand-600);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--transition);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-md);
+}
+
+.back-link:hover {
+    color: var(--brand-700);
+    background: var(--brand-25);
+}
+
+.back-icon {
+    font-size: 18px;
+}
+
+/* Segment Filters */
+.segment-filters-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.segment-filters {
+    display: flex;
+    gap: var(--space-2);
+    padding-bottom: var(--space-2);
+    min-width: min-content;
+}
+
+.filter-chip {
+    padding: 10px var(--space-4);
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border-subtle);
+    background: var(--color-white);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-main);
+    cursor: pointer;
+    transition: var(--transition);
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.filter-chip:hover {
+    border-color: var(--brand-500);
+    background: var(--brand-25);
+    color: var(--brand-700);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-card);
+}
+
+.filter-chip.active {
+    border-color: var(--brand-600);
+    background: var(--brand-500);
+    color: var(--color-white);
+}
+
+.chip-count {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.filter-chip.active .chip-count {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.filter-chip.clear-filters {
+    background: var(--error-50);
+    border-color: var(--error-500);
+    color: var(--error-700);
+}
+
+.filter-chip.clear-filters:hover {
+    background: var(--error-500);
+    color: var(--color-white);
+}
+
+/* Master Stockist Table */
+.stockist-master-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.stockist-master-table thead {
+    background: var(--gray-50);
+}
+
+.stockist-master-table th {
+    padding: var(--space-3) var(--space-4);
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.stockist-master-table tbody tr {
+    border-bottom: 1px solid var(--border-subtle);
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.stockist-master-table tbody tr:hover {
+    background: var(--gray-25);
+}
+
+.stockist-master-table td {
+    padding: var(--space-4);
+    font-size: 14px;
+    color: var(--text-main);
+}
+
+.stockist-name-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.stockist-name-primary {
+    font-weight: 600;
+}
+
+.stockist-code {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+/* Traffic Light Indicators */
+.metric-badge {
+    display: inline-flex;
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.metric-badge.good {
+    background: var(--success-50);
+    color: var(--success-700);
+}
+
+.metric-badge.warn {
+    background: var(--warning-50);
+    color: var(--warning-600);
+}
+
+.metric-badge.bad {
+    background: var(--error-50);
+    color: var(--error-700);
+}
+
+/* Action Button */
+.btn-open-360 {
+    padding: 6px 16px;
+    border-radius: var(--radius-md);
+    border: none;
+    background: var(--brand-500);
+    color: var(--color-white);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-open-360:hover {
+    background: var(--brand-600);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(6, 106, 254, 0.3);
+}
+
+.hidden {
+    display: none !important;
+}
