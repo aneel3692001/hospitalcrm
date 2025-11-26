@@ -84,7 +84,8 @@
                     <div class="glass-card kpi-card">
                         <div class="kpi-header">
                             <div class="kpi-icon">📦</div>
-                            <div class="kpi-label">Coverage penetration</div>
+                            <div class="kpi-label">Coverage penetration <span class="kpi-tooltip-icon"
+                                    data-tooltip="% of Lupin priority SKUs stocked">ⓘ</span></div>
                         </div>
                         <div id="territory-penetration" class="kpi-value">56%</div>
                         <div class="kpi-sub">% of Lupin priority SKUs carried</div>
@@ -92,7 +93,8 @@
                     <div class="glass-card kpi-card">
                         <div class="kpi-header">
                             <div class="kpi-icon">🏥</div>
-                            <div class="kpi-label">Inventory health score</div>
+                            <div class="kpi-label">Inventory health score <span class="kpi-tooltip-icon"
+                                    data-tooltip="Composite score of DOI, ageing, near-expiry">ⓘ</span></div>
                         </div>
                         <div id="territory-inventory" class="kpi-value">80</div>
                         <div class="kpi-sub">Avg across stockists</div>
@@ -100,7 +102,8 @@
                     <div class="glass-card kpi-card">
                         <div class="kpi-header">
                             <div class="kpi-icon">💰</div>
-                            <div class="kpi-label">Credit risk exposure</div>
+                            <div class="kpi-label">Credit risk exposure <span class="kpi-tooltip-icon"
+                                    data-tooltip="Outstanding balance & 90+ ageing risk">ⓘ</span></div>
                         </div>
                         <div id="territory-credit" class="kpi-value">₹ 6.09 Cr</div>
                         <div class="kpi-sub">90+ overdue across territory</div>
@@ -108,7 +111,8 @@
                     <div class="glass-card kpi-card">
                         <div class="kpi-header">
                             <div class="kpi-icon">✅</div>
-                            <div class="kpi-label">SLA adherence</div>
+                            <div class="kpi-label">SLA adherence <span class="kpi-tooltip-icon"
+                                    data-tooltip="% orders & complaints within agreed timelines">ⓘ</span></div>
                         </div>
                         <div id="territory-sla" class="kpi-value">90%</div>
                         <div class="kpi-sub">Logistics & complaint SLA</div>
@@ -116,35 +120,73 @@
                     <div class="glass-card kpi-card">
                         <div class="kpi-header">
                             <div class="kpi-icon">🔄</div>
-                            <div class="kpi-label">Order velocity</div>
+                            <div class="kpi-label">Order velocity <span class="kpi-tooltip-icon"
+                                    data-tooltip="Avg billing cycles per month">ⓘ</span></div>
                         </div>
                         <div id="territory-velocity" class="kpi-value">3.2</div>
                         <div class="kpi-sub">Avg billing cycles per stockist</div>
                     </div>
+                    <div class="glass-card kpi-card">
+                        <div class="kpi-header">
+                            <div class="kpi-icon">💵</div>
+                            <div class="kpi-label">Sales (Period) <span class="kpi-tooltip-icon"
+                                    data-tooltip="Total billed sales in selected time period">ⓘ</span></div>
+                        </div>
+                        <div id="territory-sales" class="kpi-value">₹ 3.8 Cr</div>
+                        <div class="kpi-sub">Territory sales for selected period</div>
+                    </div>
                 </section>
 
-                <!-- Smart Segmentation Filters -->
-                <div class="segment-filters-wrapper" style="margin-bottom: var(--space-5);">
-                    <div class="segment-filters">
-                        <div class="filter-chip" data-filter="high-potential">
-                            🔥 High potential <span class="chip-count">(4)</span>
+                <!-- Timeline Selector & Filters -->
+                <div style="margin-bottom: var(--space-5);">
+                    <div
+                        style="display: flex; gap: var(--space-4); align-items: center; margin-bottom: var(--space-3); flex-wrap: wrap;">
+                        <div>
+                            <label
+                                style="font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 8px;">Timeline</label>
+                            <div id="timeline-selector" class="segment-filters" style="padding-bottom: 0;">
+                                <div class="filter-chip timeline-chip active" data-timeline="last-30-days">Last 30 Days
+                                </div>
+                                <div class="filter-chip timeline-chip" data-timeline="last-quarter">Last Quarter</div>
+                                <div class="filter-chip timeline-chip" data-timeline="ytd">YTD</div>
+                            </div>
                         </div>
-                        <div class="filter-chip" data-filter="credit-risk">
-                            ❗ High credit risk <span class="chip-count">(2)</span>
+                        <div>
+                            <label for="city-filter"
+                                style="font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 8px;">City</label>
+                            <select id="city-filter" class="city-filter-dropdown">
+                                <option value="All">All</option>
+                                <option value="Mumbai">Mumbai</option>
+                                <option value="Pune">Pune</option>
+                                <option value="Kolkata">Kolkata</option>
+                                <option value="Bangalore">Bangalore</option>
+                            </select>
                         </div>
-                        <div class="filter-chip" data-filter="near-expiry">
-                            ⚠ Near-expiry / high ageing <span class="chip-count">(3)</span>
+                    </div>
+
+                    <!-- Smart Segmentation Filters -->
+                    <div class="segment-filters-wrapper">
+                        <div class="segment-filters">
+                            <div class="filter-chip" data-filter="high-potential">
+                                🔥 High potential <span class="chip-count">(4)</span>
+                            </div>
+                            <div class="filter-chip" data-filter="credit-risk">
+                                ❗ High credit risk <span class="chip-count">(2)</span>
+                            </div>
+                            <div class="filter-chip" data-filter="near-expiry">
+                                ⚠ Near-expiry / high ageing <span class="chip-count">(3)</span>
+                            </div>
+                            <div class="filter-chip" data-filter="service-risk">
+                                ⚡ Service reliability risk <span class="chip-count">(3)</span>
+                            </div>
+                            <div class="filter-chip" data-filter="fastest-growing">
+                                ⭐ Fastest growing <span class="chip-count">(2)</span>
+                            </div>
+                            <div class="filter-chip" data-filter="low-roi">
+                                ⏳ Low ROI visits <span class="chip-count">(1)</span>
+                            </div>
+                            <button class="filter-chip clear-filters hidden">✕ Clear all</button>
                         </div>
-                        <div class="filter-chip" data-filter="service-risk">
-                            ⚡ Service reliability risk <span class="chip-count">(3)</span>
-                        </div>
-                        <div class="filter-chip" data-filter="fastest-growing">
-                            ⭐ Fastest growing <span class="chip-count">(2)</span>
-                        </div>
-                        <div class="filter-chip" data-filter="low-roi">
-                            ⏳ Low ROI visits <span class="chip-count">(1)</span>
-                        </div>
-                        <button class="filter-chip clear-filters hidden">✕ Clear all</button>
                     </div>
                 </div>
 
@@ -161,14 +203,18 @@
                                 <tr>
                                     <th>Stockist</th>
                                     <th>City</th>
-                                    <th>Penetration</th>
-                                    <th>Inv Health</th>
-                                    <th>Credit Exposure</th>
-                                    <th>SLA</th>
-                                    <th>Cycles/Mo</th>
+                                    <th>Penetration <span class="kpi-tooltip-icon"
+                                            data-tooltip="Coverage penetration %">ⓘ</span></th>
+                                    <th>Inv Health <span class="kpi-tooltip-icon"
+                                            data-tooltip="Inventory health composite score">ⓘ</span></th>
+                                    <th>Credit Exposure <span class="kpi-tooltip-icon"
+                                            data-tooltip="Outstanding credit risk">ⓘ</span></th>
+                                    <th>SLA <span class="kpi-tooltip-icon" data-tooltip="SLA adherence %">ⓘ</span></th>
+                                    <th>Cycles/Mo <span class="kpi-tooltip-icon"
+                                            data-tooltip="Order velocity per month">ⓘ</span></th>
                                     <th>Last Billed</th>
-                                    <th>Priority</th>
-                                    <th>Action</th>
+                                    <th>Priority <span class="kpi-tooltip-icon"
+                                            data-tooltip="Composite priority score">ⓘ</span></th>
                                 </tr>
                             </thead>
                             <tbody id="stockist-table-body">

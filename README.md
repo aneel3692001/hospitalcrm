@@ -6,7 +6,7 @@
 
 This is a comprehensive Hospital CRM UI built with clean code practices and modern web standards. The dashboard provides a two-layer navigation system: a **territory-level overview** for managing multiple stockists and a **detailed Stockist 360 view** with real-time insights into sales, inventory, financial metrics, and service operations for individual distributors.
 
-**Latest Version**: v2.3.0 (2025-11-25)
+**Latest Version**: v2.4.0 (2025-11-26)
 
 ## 📁 File Structure
 
@@ -45,14 +45,30 @@ Simply open `index.html` in a modern web browser. The dashboard will automatical
 ## ✨ Features
 
 ### 🏢 All Stockists Overview (Territory Dashboard)
-**New in v2.3.0** - Territory-level view for managing 10-300+ stockists:
+**New in v2.4.0** - Enhanced territory-level view with additional insights:
 
-- **Territory KPIs**: 5 key metrics with traffic-light color coding
-  - Coverage penetration (% of Lupin priority SKUs)
-  - Inventory health score (avg across stockists)
-  - Credit risk exposure (90+ overdue)
-  - SLA adherence (logistics & complaint TAT)
-  - Order velocity (avg billing cycles)
+- **Territory KPIs**: 6 key metrics with traffic-light color coding and tooltips
+  - Coverage penetration (% of Lupin priority SKUs stocked)
+  - Inventory health score (composite score of DOI, ageing, near-expiry)
+  - Credit risk exposure (outstanding balance & 90+ ageing risk)
+  - SLA adherence (% orders & complaints within agreed timelines)
+  - Order velocity (avg billing cycles per month)
+  - **Sales (Period)** - Total billed sales for selected time period ⭐NEW
+  
+- **Timeline Selector**: Switch between time periods to view dynamic KPIs ⭐NEW
+  - Last 30 Days (default)
+  - Last Quarter
+  - YTD (Year-to-Date)
+  
+- **Adaptive City Filter**: Intelligent filtering based on territory ⭐NEW
+  - Auto-hides for single-city territories
+  - Shows only assigned cities for multi-city KAMs
+  - Combines with segment filters using AND logic
+  
+- **Tooltip Definitions**: Hover over ⓘ icons for clear metric descriptions ⭐NEW
+  - 6 KPI tooltips explaining each metric
+ - 7 table header tooltips for column clarifications
+  - Zero-clipping dynamic rendering for perfect visibility
   
 - **Smart Segmentation**: 6 filter chips for instant insights
   - 🔥 High potential but low penetration
@@ -62,8 +78,9 @@ Simply open `index.html` in a modern web browser. The dashboard will automatical
   - ⭐ Fastest growing
   - ⏳ Low ROI visits
   
-- **Master Stockist Table**: 10 columns with intelligent sorting
-  - Stockist name & code
+- **Master Stockist Table**: 9 columns with intelligent sorting ⭐UPDATED
+  - **Stockist name** (clickable link to Stockist 360) ⭐NEW
+  - Stockist code
   - City location
   - Penetration (traffic-light badge)
   - Inventory health (traffic-light badge)
@@ -72,9 +89,9 @@ Simply open `index.html` in a modern web browser. The dashboard will automatical
   - Order cycles per month
   - Last billed (time badge)
   - Auto-calculated priority score
-  - "Open 360 View" action button
+  - ~~Action column removed~~ - Click stockist name to navigate ⭐NEW
 
-- **State Preservation**: Filters and scroll position maintained across navigation
+- **State Preservation**: Filters, timeline, and scroll position maintained across navigation
 
 ### 👤 Stockist 360 (Detail View)
 Four detailed tabs for individual stockist analysis:
@@ -166,7 +183,7 @@ Using design tokens provides:
 
 ## 📱 Responsive Breakpoints
 
-- **Desktop**: > 1200px (5-column KPIs, full table with 10 columns)
+- **Desktop**: > 1200px (6-column KPIs, full table with 9 columns)
 - **Tablet**: 768px - 1200px (3-column KPIs, some table columns hidden)
 - **Mobile**: < 768px (Single column KPIs, table converts to cards)
 
@@ -215,6 +232,10 @@ Potential improvements:
 - [x] ~~Add animation library~~ (Built-in CSS transitions)
 - [x] ~~Territory-level insights~~ ✅ (v2.3.0)
 - [x] ~~Performance optimization for scale~~ ✅ (v2.3.0)
+- [x] ~~Timeline-based KPI analysis~~ ✅ (v2.4.0)
+- [x] ~~Adaptive territory filtering~~ ✅ (v2.4.0)
+- [x] ~~Tooltip definitions for metrics~~ ✅ (v2.4.0)
+- [x] ~~Streamlined table navigation~~ ✅ (v2.4.0)
 
 ## 📝 Browser Support
 

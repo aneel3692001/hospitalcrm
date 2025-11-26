@@ -360,12 +360,15 @@ const stockists = [
         orderCycles: 3.2,
         lastBilledDays: 12,
         priorityScore: 78,
-        segments: ['high-potential']
+        segments: ['high-potential'],
+        sales30d: 245000,
+        salesQuarter: 720000,
+        salesYTD: 2880000
     },
     {
         id: 'IN-DEL-MED-032',
         name: 'MedPlus Distributors',
-        city: 'Delhi',
+        city: 'Mumbai',
         category: 'B',
         penetration: 68,
         inventoryHealth: 72,
@@ -374,12 +377,15 @@ const stockists = [
         orderCycles: 2.8,
         lastBilledDays: 45,
         priorityScore: 65,
-        segments: ['credit-risk', 'service-risk']
+        segments: ['credit-risk', 'service-risk'],
+        sales30d: 180000,
+        salesQuarter: 540000,
+        salesYTD: 2160000
     },
     {
         id: 'IN-BLR-APO-021',
         name: 'Apollo Medical Supplies',
-        city: 'Bangalore',
+        city: 'Mumbai',
         category: 'A',
         penetration: 75,
         inventoryHealth: 91,
@@ -388,12 +394,15 @@ const stockists = [
         orderCycles: 4.2,
         lastBilledDays: 8,
         priorityScore: 92,
-        segments: ['fastest-growing']
+        segments: ['fastest-growing'],
+        sales30d: 420000,
+        salesQuarter: 1260000,
+        salesYTD: 5040000
     },
     {
         id: 'IN-PUN-MER-018',
         name: 'Mercury Pharma Co.',
-        city: 'Pune',
+        city: 'Mumbai',
         category: 'C',
         penetration: 35,
         inventoryHealth: 68,
@@ -402,12 +411,15 @@ const stockists = [
         orderCycles: 2.1,
         lastBilledDays: 28,
         priorityScore: 48,
-        segments: ['high-potential', 'service-risk', 'near-expiry']
+        segments: ['high-potential', 'service-risk', 'near-expiry'],
+        sales30d: 150000,
+        salesQuarter: 450000,
+        salesYTD: 1800000
     },
     {
         id: 'IN-HYD-VIT-009',
         name: 'Vitality Medical Stores',
-        city: 'Hyderabad',
+        city: 'Mumbai',
         category: 'B',
         penetration: 58,
         inventoryHealth: 79,
@@ -416,12 +428,15 @@ const stockists = [
         orderCycles: 3.5,
         lastBilledDays: 15,
         priorityScore: 71,
-        segments: []
+        segments: [],
+        sales30d: 320000,
+        salesQuarter: 960000,
+        salesYTD: 3840000
     },
     {
         id: 'IN-CHN-LIF-026',
         name: 'Lifespan Distributors',
-        city: 'Chennai',
+        city: 'Mumbai',
         category: 'A',
         penetration: 82,
         inventoryHealth: 88,
@@ -430,12 +445,15 @@ const stockists = [
         orderCycles: 3.9,
         lastBilledDays: 6,
         priorityScore: 85,
-        segments: []
+        segments: [],
+        sales30d: 380000,
+        salesQuarter: 1140000,
+        salesYTD: 4560000
     },
     {
         id: 'IN-KOL-HEA-015',
         name: 'HealthFirst Medical',
-        city: 'Kolkata',
+        city: 'Mumbai',
         category: 'B',
         penetration: 48,
         inventoryHealth: 71,
@@ -444,7 +462,10 @@ const stockists = [
         orderCycles: 2.6,
         lastBilledDays: 62,
         priorityScore: 54,
-        segments: ['credit-risk', 'near-expiry']
+        segments: ['credit-risk', 'near-expiry'],
+        sales30d: 190000,
+        salesQuarter: 570000,
+        salesYTD: 2280000
     },
     {
         id: 'IN-MUM-CAR-041',
@@ -458,12 +479,15 @@ const stockists = [
         orderCycles: 4.5,
         lastBilledDays: 5,
         priorityScore: 81,
-        segments: ['high-potential', 'fastest-growing']
+        segments: ['high-potential', 'fastest-growing'],
+        sales30d: 450000,
+        salesQuarter: 1350000,
+        salesYTD: 5400000
     },
     {
         id: 'IN-DEL-UNI-029',
         name: 'UniMed Suppliers',
-        city: 'Delhi',
+        city: 'Mumbai',
         category: 'C',
         penetration: 29,
         inventoryHealth: 64,
@@ -472,12 +496,15 @@ const stockists = [
         orderCycles: 1.8,
         lastBilledDays: 94,
         priorityScore: 38,
-        segments: ['high-potential', 'service-risk', 'near-expiry', 'low-roi']
+        segments: ['high-potential', 'service-risk', 'near-expiry', 'low-roi'],
+        sales30d: 120000,
+        salesQuarter: 360000,
+        salesYTD: 1440000
     },
     {
         id: 'IN-BLR-GRE-033',
         name: 'GreenCross Pharmaceuticals',
-        city: 'Bangalore',
+        city: 'Mumbai',
         category: 'B',
         penetration: 71,
         inventoryHealth: 85,
@@ -486,7 +513,10 @@ const stockists = [
         orderCycles: 3.7,
         lastBilledDays: 11,
         priorityScore: 76,
-        segments: []
+        segments: [],
+        sales30d: 350000,
+        salesQuarter: 1050000,
+        salesYTD: 4200000
     }
 ];
 
@@ -1362,14 +1392,16 @@ const StockistData = {
     /**
      * Filter stockists by active segments
      * Uses precomputed Sets for performance
+     * @param {Array} stockistList - List of stockists to filter
+     * @param {Array} activeSegments - Segments to filter by
      */
-    filterBySegments(activeSegments) {
+    filterBySegments(stockistList, activeSegments) {
         if (activeSegments.length === 0) {
-            return stockists;
+            return stockistList;
         }
 
         // Intersect stockists that have ALL active segments
-        return stockists.filter(stockist => {
+        return stockistList.filter(stockist => {
             return activeSegments.every(segment =>
                 stockistSegments[segment] && stockistSegments[segment].has(stockist.id)
             );
@@ -1482,7 +1514,11 @@ function buildStockistRow(stockist) {
     row.innerHTML = `
         <td>
             <div class="stockist-name-cell">
-                <div class="stockist-name-primary">${stockist.name || 'N/A'}</div>
+                <a href="#stockist/${stockist.id}" 
+                   class="stockist-name-link stockist-name-primary" 
+                   onclick="event.stopPropagation(); Router.navigateToDetail('${stockist.id}'); return false;">
+                    ${stockist.name || 'N/A'}
+                </a>
                 <div class="stockist-code">${stockist.id || ''}</div>
             </div>
         </td>
@@ -1494,7 +1530,6 @@ function buildStockistRow(stockist) {
         <td>${stockist.orderCycles || '0.0'}</td>
         <td><span class="last-billed-badge ${MetricClassifiers.lastBilled(stockist.lastBilledDays)}">${stockist.lastBilledDays || 0}d</span></td>
         <td>${stockist.priorityScore || 0}</td>
-        <td><button class="btn-open-360" onclick="event.stopPropagation(); Router.navigateToDetail('${stockist.id}');">Open 360</button></td>
     `;
 
     return row;
@@ -1525,9 +1560,22 @@ function renderStockistTable(stockistList) {
 
 /**
  * Update territory KPI display
+ * @param {Array} stockistList - List of stockists to compute KPIs from (after filtering)
+ * @param {string} timeline - Selected timeline ('last-30-days', 'last-quarter', 'ytd')
  */
-function updateTerritoryKPIs() {
-    const kpis = StockistData.computeTerritoryKPIs();
+function updateTerritoryKPIs(stockistList = stockists, timeline = 'last-30-days') {
+    const total = stockistList.length;
+
+    if (total === 0) {
+        // Show zeros if no stockists  
+        document.getElementById('territory-penetration').textContent = '0%';
+        document.getElementById('territory-inventory').textContent = '0';
+        document.getElementById('territory-credit').textContent = '₹ 0.00 Cr';
+        document.getElementById('territory-sla').textContent = '0%';
+        document.getElementById('territory-velocity').textContent = '0.0';
+        document.getElementById('territory-sales').textContent = '₹ 0.00 Cr';
+        return;
+    }
 
     const updateKPI = (id, value, className = null) => {
         const element = document.getElementById(id);
@@ -1535,22 +1583,64 @@ function updateTerritoryKPIs() {
             element.textContent = value;
             if (className) {
                 element.className = 'kpi-value ' + className;
+            } else {
+                element.className = 'kpi-value';
             }
         }
     };
 
-    updateKPI('territory-penetration', `${kpis.coveragePenetration}%`,
-        MetricClassifiers.penetration(kpis.coveragePenetration));
+    // Calculate KPIs
+    const penetration = Math.round(
+        stockistList.reduce((sum, s) => sum + (s.penetration || 0), 0) / total
+    );
 
-    updateKPI('territory-inventory', kpis.inventoryHealthScore,
-        MetricClassifiers.inventoryHealth(kpis.inventoryHealthScore));
+    const inventoryHealth = Math.round(
+        stockistList.reduce((sum, s) => sum + (s.inventoryHealth || 0), 0) / total
+    );
 
-    updateKPI('territory-credit', `₹ ${(kpis.creditRiskExposure / 10000000).toFixed(2)} Cr`);
+    const creditExposure = stockistList.reduce((sum, s) => sum + (s.creditExposure || 0), 0);
 
-    updateKPI('territory-sla', `${kpis.slaAdherence}%`,
-        MetricClassifiers.sla(kpis.slaAdherence));
+    const slaAdherence = Math.round(
+        stockistList.reduce((sum, s) => sum + (s.slaAdherence || 0), 0) / total
+    );
 
-    updateKPI('territory-velocity', kpis.orderVelocity);
+    const velocity = (
+        stockistList.reduce((sum, s) => sum + (s.orderCycles || 0), 0) / total
+    ).toFixed(1);
+
+    // Calculate Sales based on timeline
+    let salesField = 'sales30d';
+    if (timeline === 'last-quarter') salesField = 'salesQuarter';
+    else if (timeline === 'ytd') salesField = 'salesYTD';
+
+    const totalSales = stockistList.reduce((sum, s) => sum + (s[salesField] || 0), 0);
+    const salesCr = (totalSales / 10000000).toFixed(2);
+
+    // Sales traffic light logic
+    let salesClass = '';
+    if (timeline === 'last-30-days') {
+        salesClass = totalSales >= 3000000 ? 'good' : totalSales >= 2000000 ? 'warn' : 'bad';
+    } else if (timeline === 'last-quarter') {
+        salesClass = totalSales >= 9000000 ? 'good' : totalSales >= 6000000 ? 'warn' : 'bad';
+    } else { // YTD
+        salesClass = totalSales >= 36000000 ? 'good' : totalSales >= 24000000 ? 'warn' : 'bad';
+    }
+
+    // Update displays
+    updateKPI('territory-penetration', `${penetration}%`,
+        MetricClassifiers.penetration(penetration));
+
+    updateKPI('territory-inventory', inventoryHealth,
+        MetricClassifiers.inventoryHealth(inventoryHealth));
+
+    updateKPI('territory-credit', `₹ ${(creditExposure / 10000000).toFixed(2)} Cr`);
+
+    updateKPI('territory-sla', `${slaAdherence}%`,
+        MetricClassifiers.sla(slaAdherence));
+
+    updateKPI('territory-velocity', velocity);
+
+    updateKPI('territory-sales', `₹ ${salesCr} Cr`, salesClass);
 }
 
 /* ========================================
@@ -1559,6 +1649,8 @@ function updateTerritoryKPIs() {
 
 const OverviewState = {
     activeSegments: [],
+    selectedTimeline: 'last-30-days',
+    selectedCity: 'All',
     scrollPosition: 0,
 
     /**
@@ -1581,11 +1673,25 @@ const OverviewState = {
     },
 
     /**
-     * Apply filters and re-render table
+     * Apply all filters (segments + city + timeline) and re-render table
      */
     applyFilters() {
-        const filtered = StockistData.filterBySegments(this.activeSegments);
+        let filtered = StockistData.getAll();
+
+        // Filter by city
+        if (this.selectedCity !== 'All') {
+            filtered = filtered.filter(s => s.city === this.selectedCity);
+        }
+
+        // Filter by segments
+        if (this.activeSegments.length > 0) {
+            filtered = StockistData.filterBySegments(filtered, this.activeSegments);
+        }
+
         renderStockistTable(filtered);
+
+        // Update territory KPIs based on filtered list and timeline
+        updateTerritoryKPIs(filtered, this.selectedTimeline);
 
         // Show/hide clear button
         const clearBtn = document.querySelector('.clear-filters');
@@ -1726,14 +1832,42 @@ const Router = {
  * Initialize Overview View
  */
 function initializeOverview() {
+    // Initialize tooltip positioning
+    initializeTooltips();
+
+    // Initialize city filter based on unique cities in data
+    initializeCityFilter();
+
     // Update territory KPIs
     updateTerritoryKPIs();
 
     // Render initial table (all stockists)
     renderStockistTable(StockistData.getAll());
 
-    // Attach filter chip listeners
-    document.querySelectorAll('.filter-chip:not(.clear-filters)').forEach(chip => {
+    // Attach timeline selector listeners
+    document.querySelectorAll('.timeline-chip').forEach(chip => {
+        chip.addEventListener('click', function () {
+            // Update active state
+            document.querySelectorAll('.timeline-chip').forEach(c => c.classList.remove('active'));
+            this.classList.add('active');
+
+            // Update state and recalculate
+            OverviewState.selectedTimeline = this.dataset.timeline;
+            OverviewState.applyFilters();
+        });
+    });
+
+    // Attach city filter listener
+    const cityFilter = document.getElementById('city-filter');
+    if (cityFilter) {
+        cityFilter.addEventListener('change', function () {
+            OverviewState.selectedCity = this.value;
+            OverviewState.applyFilters();
+        });
+    }
+
+    // Attach segment filter chip listeners
+    document.querySelectorAll('.filter-chip:not(.clear-filters):not(.timeline-chip)').forEach(chip => {
         chip.addEventListener('click', function () {
             const segment = this.dataset.filter;
 
@@ -1764,6 +1898,97 @@ function initializeOverview() {
     Router.handleRouteChange();
 
     console.log('✓ Overview initialized with', stockists.length, 'stockists');
+}
+
+/**
+ * Initialize tooltip positioning to prevent clipping
+ */
+function initializeTooltips() {
+    document.querySelectorAll('.kpi-tooltip-icon[data-tooltip]').forEach(icon => {
+        let tooltipElement = null;
+
+        icon.addEventListener('mouseenter', function (e) {
+            // Create tooltip element
+            tooltipElement = document.createElement('div');
+            tooltipElement.className = 'dynamic-tooltip';
+            tooltipElement.textContent = this.getAttribute('data-tooltip');
+            document.body.appendChild(tooltipElement);
+
+            // Position tooltip
+            const rect = this.getBoundingClientRect();
+            const tooltipRect = tooltipElement.getBoundingClientRect();
+
+            let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2);
+            let top = rect.top - tooltipRect.height - 10;
+
+            // Keep tooltip within viewport
+            if (left < 10) left = 10;
+            if (left + tooltipRect.width > window.innerWidth - 10) {
+                left = window.innerWidth - tooltipRect.width - 10;
+            }
+            if (top < 10) top = rect.bottom + 10;
+
+            tooltipElement.style.left = left + 'px';
+            tooltipElement.style.top = top + 'px';
+
+            // Fade in
+            setTimeout(() => {
+                if (tooltipElement) tooltipElement.style.opacity = '1';
+            }, 10);
+        });
+
+        icon.addEventListener('mouseleave', function () {
+            if (tooltipElement) {
+                tooltipElement.style.opacity = '0';
+                setTimeout(() => {
+                    if (tooltipElement && tooltipElement.parentNode) {
+                        document.body.removeChild(tooltipElement);
+                    }
+                    tooltipElement = null;
+                }, 200);
+            }
+        });
+    });
+
+    console.log('✓ Tooltips initialized with dynamic rendering');
+}
+
+/**
+ * Initialize city filter based on unique cities in stockist data
+ */
+function initializeCityFilter() {
+    // Get unique cities from stockists
+    const uniqueCities = [...new Set(stockists.map(s => s.city))].sort();
+    const cityCount = uniqueCities.length;
+
+    const cityFilterContainer = document.querySelector('#city-filter').parentElement;
+    const cityFilter = document.getElementById('city-filter');
+
+    if (cityCount === 1) {
+        // Case A: Single city - hide filter entirely
+        cityFilterContainer.style.display = 'none';
+        OverviewState.selectedCity = uniqueCities[0];
+    } else if (cityCount === 2) {
+        // Case B: Two cities - show only those two
+        cityFilterContainer.style.display = 'block';
+        cityFilter.innerHTML = '<option value="All">All</option>';
+        uniqueCities.forEach(city => {
+            const option = document.createElement('option');
+            option.value = city;
+            option.textContent = city;
+            cityFilter.appendChild(option);
+        });
+    } else {
+        // Case C: More than 2 cities - show all (rare case)
+        cityFilterContainer.style.display = 'block';
+        cityFilter.innerHTML = '<option value="All">All</option>';
+        uniqueCities.forEach(city => {
+            const option = document.createElement('option');
+            option.value = city;
+            option.textContent = city;
+            cityFilter.appendChild(option);
+        });
+    }
 }
 
 // Initialize when DOM is ready

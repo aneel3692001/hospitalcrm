@@ -688,7 +688,7 @@ canvas {
    ======================================== */
 .kpi-strip {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(6, minmax(0, 1fr));
     gap: var(--space-4);
     margin-bottom: var(--space-8);
 }
@@ -740,6 +740,9 @@ canvas {
     color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 4px;
 }
 
 .kpi-value {
@@ -1250,7 +1253,8 @@ canvas {
     width: 100%;
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-md);
-    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: visible;
     margin-bottom: 12px;
 }
 
@@ -1390,7 +1394,7 @@ tfoot td {
    ======================================== */
 @media (max-width: 1200px) {
     .kpi-strip {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: var(--space-3);
     }
 
@@ -1552,6 +1556,8 @@ tfoot td {
     /* Tables scroll horizontally */
     .table-container {
         overflow-x: auto;
+        overflow-y: visible;
+        position: relative;
         -webkit-overflow-scrolling: touch;
         border-radius: var(--radius-md);
     }
@@ -2283,6 +2289,7 @@ tfoot td {
         justify-content: space-between;
     }
 }
+
 /* ========================================
    ALL STOCKISTS OVERVIEW
    ======================================== */
@@ -2429,6 +2436,20 @@ tfoot td {
     color: var(--text-muted);
 }
 
+/* Clickable Stockist Name */
+.stockist-name-link {
+    color: var(--brand-600);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.stockist-name-link:hover {
+    color: var(--brand-700);
+    text-decoration: underline;
+}
+
 /* Traffic Light Indicators */
 .metric-badge {
     display: inline-flex;
@@ -2474,4 +2495,81 @@ tfoot td {
 
 .hidden {
     display: none !important;
+}
+
+/* ========================================
+   KPI TOOLTIP ICONS
+   ======================================== */
+.kpi-tooltip-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: var(--text-muted);
+    cursor: help;
+    position: relative;
+    margin-left: 2px;
+}
+
+/* Disabled CSS-based tooltips - now using JavaScript dynamic tooltips */
+.kpi-tooltip-icon[data-tooltip]::after,
+.kpi-tooltip-icon[data-tooltip]::before {
+    display: none !important;
+}
+
+/* Mobile: tap to show tooltip */
+@media (hover: none) and (pointer: coarse) {
+
+    .kpi-tooltip-icon[data-tooltip]:active::after,
+    .kpi-tooltip-icon[data-tooltip]:active::before {
+        display: none !important;
+    }
+}
+
+/* Dynamic tooltip (rendered in body to avoid clipping) */
+.dynamic-tooltip {
+    position: fixed;
+    padding: 8px 12px;
+    background: var(--gray-900);
+    color: white;
+    border-radius: var(--radius-md);
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    z-index: 999999;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+/* ========================================
+   CITY FILTER DROPDOWN
+   ======================================== */
+.city-filter-dropdown {
+    padding: 10px 36px 10px 14px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-subtle);
+    background: var(--color-white);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-main);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23666' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    min-width: 140px;
+}
+
+.city-filter-dropdown:hover {
+    border-color: var(--brand-500);
+    background-color: var(--brand-25);
+}
+
+.city-filter-dropdown:focus {
+    outline: none;
+    border-color: var(--brand-500);
+    box-shadow: 0 0 0 3px var(--brand-50);
 }
